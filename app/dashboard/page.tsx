@@ -8,6 +8,7 @@ import { StatCard } from "@/components/common/StatCard";
 import { BalanceTrendChart } from "@/components/dashboard/BalanceTrendChart";
 import { SpendingCategoryChart } from "@/components/dashboard/SpendingCategoryChart";
 import { motion } from "framer-motion";
+import { SkeletonCard, SkeletonChart } from "@/components/common/Skeleton";
 
 export default function DashboardPage() {
   const transactions = useStore((state) => state.transactions);
@@ -19,8 +20,17 @@ export default function DashboardPage() {
     savingsPercentage: 0,
   });
 
+  const [loading, setLoading] = useState(true); // <-- loading state
+
   useEffect(() => {
     setStats(calculateDashboardStats(transactions));
+
+    // show skeletons for 2 seconds
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, [transactions]);
 
   const containerVariants = {
@@ -38,6 +48,43 @@ export default function DashboardPage() {
     show: { opacity: 1, y: 0 },
   };
 
+  function CountUp({
+    end,
+    duration = 2000,
+    suffix = "",
+  }: {
+    end: number;
+    duration?: number;
+    suffix?: string;
+  }) {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      let start = 0;
+      const increment = end / (duration / 16);
+
+      const timer = setInterval(() => {
+        start += increment;
+
+        if (start >= end) {
+          setCount(end);
+          clearInterval(timer);
+        } else {
+          setCount(start);
+        }
+      }, 16);
+
+      return () => clearInterval(timer);
+    }, [end, duration]);
+
+    return (
+      <span>
+        {end % 1 !== 0 ? count.toFixed(1) : Math.floor(count)}
+        {suffix}
+      </span>
+    );
+  }
+
   return (
     <motion.div
       variants={containerVariants}
@@ -45,64 +92,59 @@ export default function DashboardPage() {
       animate="show"
       className="relative space-y-10"
     >
-      {/* Background glow */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-20 top-10 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
-        <div className="absolute right-20 bottom-10 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
-      </div>
-
-      {/* Header */}
+      {/* Dashboard Header */}
       <motion.div variants={fadeUp}>
-        <p className="text-sm uppercase tracking-[0.25em] text-gray-500 dark:text-gray-400 mb-2">
-          Finance Dashboard
-        </p>
-
         <h1 className="text-4xl font-bold tracking-tight text-black dark:text-white">
           Dashboard Overview
         </h1>
-
         <p className="mt-2 text-gray-600 dark:text-gray-400">
-          Monitor your balance, income, expenses, and financial growth in real
-          time.
+          Monitor your balance, income, expenses, and financial growth in real time.
         </p>
       </motion.div>
 
-      {/* Summary Cards */}
+      {/* Cards Section */}
       <motion.div
         variants={fadeUp}
         className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4"
       >
-        <StatCard
-          title="Total Balance"
-          value={stats.totalBalance}
-          icon={<DollarSign size={22} />}
-          color="blue"
-        />
-
-        <StatCard
-          title="Total Income"
-          value={stats.totalIncome}
-          icon={<TrendingUp size={22} />}
-          color="green"
-        />
-
-        <StatCard
-          title="Total Expenses"
-          value={stats.totalExpenses}
-          icon={<CreditCard size={22} />}
-          color="red"
-        />
-
-        <StatCard
-          title="Savings Rate"
-          value={stats.savingsPercentage}
-          icon={<Target size={22} />}
-          color="purple"
-          isCurrency={false}
-        />
+        {loading ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : (
+          <>
+            <StatCard
+              title="Total Balance"
+              value={<CountUp end={stats.totalBalance} suffix="₹" />}
+              icon={<DollarSign size={22} />}
+              color="blue"
+            />
+            <StatCard
+              title="Total Income"
+              value={<CountUp end={stats.totalIncome} suffix="₹" />}
+              icon={<TrendingUp size={22} />}
+              color="green"
+            />
+            <StatCard
+              title="Total Expenses"
+              value={<CountUp end={stats.totalExpenses} suffix="₹" />}
+              icon={<CreditCard size={22} />}
+              color="red"
+            />
+            <StatCard
+              title="Savings Rate"
+              value={<CountUp end={stats.savingsPercentage} suffix="%" />}
+              icon={<Target size={22} />}
+              color="purple"
+              isCurrency={false}
+            />
+          </>
+        )}
       </motion.div>
 
-      {/* Charts section */}
       <motion.div variants={fadeUp}>
         <div className="mb-5">
           <h2 className="text-2xl font-semibold text-black dark:text-white">
@@ -114,37 +156,30 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-          <motion.div
-            whileHover={{ y: -4 }}
-            transition={{ duration: 0.25 }}
-            className="
-              rounded-3xl
-              border border-black/10 dark:border-white/10
-              bg-white/80 dark:bg-white/[0.03]
-              backdrop-blur-2xl
-              p-6
-              shadow-[0_10px_40px_rgba(0,0,0,0.06)]
-              dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
-            "
-          >
-            <BalanceTrendChart />
-          </motion.div>
+          {loading ? (
+            <>
+              <SkeletonChart />
+              <SkeletonChart />
+            </>
+          ) : (
+            <>
+              <motion.div
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.25 }}
+                className="rounded-3xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/[0.03] backdrop-blur-2xl p-6 shadow-[0_10px_40px_rgba(0,0,0,0.06)] dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]"
+              >
+                <BalanceTrendChart />
+              </motion.div>
 
-          <motion.div
-            whileHover={{ y: -4 }}
-            transition={{ duration: 0.25 }}
-            className="
-              rounded-3xl
-              border border-black/10 dark:border-white/10
-              bg-white/80 dark:bg-white/[0.03]
-              backdrop-blur-2xl
-              p-6
-              shadow-[0_10px_40px_rgba(0,0,0,0.06)]
-              dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
-            "
-          >
-            <SpendingCategoryChart />
-          </motion.div>
+              <motion.div
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.25 }}
+                className="rounded-3xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/[0.03] backdrop-blur-2xl p-6 shadow-[0_10px_40px_rgba(0,0,0,0.06)] dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]"
+              >
+                <SpendingCategoryChart />
+              </motion.div>
+            </>
+          )}
         </div>
       </motion.div>
     </motion.div>

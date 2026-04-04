@@ -47,14 +47,10 @@ export function SkeletonChart() {
       <motion.div
         animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="flex items-end justify-between gap-2"
+        className="relative h-80 w-full bg-gray-300 dark:bg-gray-700 rounded-lg"
       >
-        {Array.from({ length: 12 }).map((_, i) => (
-          <div
-            key={i}
-            className={`h-${[12, 16, 20, 24, 28, 32][Math.floor(Math.random() * 6)]} w-full rounded-lg bg-gray-300 dark:bg-gray-700`}
-          />
-        ))}
+        {/* Optional: you can add a pseudo "line" effect with gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-300 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-lg" />
       </motion.div>
     </div>
   );

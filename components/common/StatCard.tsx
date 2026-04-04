@@ -5,7 +5,7 @@ import { formatCurrency } from "@/lib/calculations";
 
 interface StatCardProps {
   title: string;
-  value: number;
+  value: number | React.ReactNode; // <-- allow numbers or nodes
   icon: React.ReactNode;
   color: "blue" | "green" | "red" | "purple";
   isCurrency?: boolean;
@@ -44,7 +44,13 @@ export function StatCard({
             {title}
           </p>
           <h3 className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-            {isCurrency ? formatCurrency(value) : `${value}%`}
+            {
+              typeof value === "number"
+                ? isCurrency
+                  ? formatCurrency(value)
+                  : `${value}%`
+                : value
+            }
           </h3>
           {trend && (
             <p
