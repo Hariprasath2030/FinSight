@@ -9,6 +9,8 @@ import {
   Zap,
   Moon,
   Sun,
+  X,
+  LogIn,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useStore } from "@/store";
@@ -24,6 +26,7 @@ export function LandingPage() {
 
   const [showLogin, setShowLogin] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
 
@@ -87,18 +90,16 @@ export function LandingPage() {
       {/* Animated Background */}
       <div className="absolute inset-0 z-0">
         <ShapeGrid
-          speed={0.57}
-          squareSize={40}
+          speed={0.24}
+          squareSize={60}
           direction="diagonal"
-          borderColor={isDark ? "#2a2a2a" : "#d1d5db"}
-          hoverFillColor={isDark ? "#111111" : "#f3f4f6"}
+          borderColor={isDark ? "#d1d5db" : "#2a2a2a"}
+          hoverFillColor={isDark ? "#ffffff" : "#111111"}
           shape="hexagon"
           hoverTrailAmount={0}
-          size={80}
         />
       </div>
 
-      {/* Main Content */}
       <div className="relative z-10">
         {/* Navbar */}
         <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white dark:bg-black border-b border-gray-200 dark:border-white/10 transition-colors duration-300">
@@ -115,45 +116,66 @@ export function LandingPage() {
             </motion.div>
 
             <div className="flex items-center gap-4">
-              {/* Theme Toggle */}
               <button
                 onClick={handleThemeToggle}
-                className="rounded-lg p-2 transition-all duration-300 hover:scale-110 active:scale-95 bg-black text-white dark:bg-white dark:text-black shadow-lg"
+                className="
+    group relative overflow-hidden
+    h-11 w-11
+    rounded-2xl
+    border border-black/10 dark:border-white/10
+    bg-white/80 dark:bg-black/60
+    backdrop-blur-xl
+    text-black dark:text-white
+    shadow-[0_8px_24px_rgba(0,0,0,0.12)]
+    dark:shadow-[0_8px_24px_rgba(255,255,255,0.08)]
+    hover:scale-105
+    hover:shadow-[0_12px_32px_rgba(0,0,0,0.18)]
+    dark:hover:shadow-[0_12px_32px_rgba(255,255,255,0.12)]
+    active:scale-95
+    transition-all duration-300
+    flex items-center justify-center
+  "
                 aria-label="Toggle theme"
               >
-                {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+
+                <div className="relative z-10 transition-transform duration-300 group-hover:rotate-12">
+                  {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                </div>
               </button>
 
-              {/* Login */}
               <button
-                onClick={() => setShowLogin(true)}
-                className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105 ${
-                  showLogin
-                    ? "bg-blue-600 text-white shadow-lg hover:bg-blue-700"
-                    : "bg-black text-white dark:bg-white dark:text-black"
-                }`}
+                onClick={() => {
+                  setShowLogin(true);
+                  setIsModalOpen(true);
+                }}
+                className="
+    group relative overflow-hidden
+    flex items-center gap-2
+    px-4 py-2.5
+    rounded-2xl
+    border border-white/10 dark:border-white/10
+    bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600
+    text-white font-semibold text-sm tracking-wide
+    shadow-[0_8px_30px_rgba(37,99,235,0.35)]
+    hover:shadow-[0_12px_40px_rgba(37,99,235,0.5)]
+    hover:scale-105
+    active:scale-95
+    transition-all duration-300
+  "
+                aria-label="Open login"
               >
-                Login
-              </button>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
-              {/* Signup */}
-              <button
-                onClick={() => setShowLogin(false)}
-                className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105 ${
-                  !showLogin
-                    ? "bg-blue-600 text-white shadow-lg hover:bg-blue-700"
-                    : "bg-black text-white dark:bg-white dark:text-black"
-                }`}
-              >
-                Sign Up
+                <LogIn className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+
+                <span className="relative z-10">Login</span>
               </button>
             </div>
           </div>
         </nav>
 
-        {/* Hero */}
         <section className="max-w-7xl mx-auto px-6 pt-32 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left */}
           <div>
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -188,20 +210,7 @@ export function LandingPage() {
               ))}
             </div>
           </div>
-
-          {/* Right Auth Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="lg:sticky lg:top-32"
-          >
-            <div className="bg-white/90 dark:bg-black/80 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-gray-200 dark:border-white/10">
-              {showLogin ? <LoginForm /> : <SignupForm />}
-            </div>
-          </motion.div>
         </section>
-
-        {/* Features */}
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
@@ -258,6 +267,34 @@ export function LandingPage() {
             </p>
           </div>
         </footer>
+
+        {/* Modal */}
+        {isModalOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md"
+            onClick={() => setIsModalOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: 120, scale: 0.96 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{
+                duration: 0.45,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="
+        relative w-full max-w-4xl mx-4
+        rounded-3xl overflow-hidden
+        border border-white/10
+        bg-white/90 dark:bg-black/80
+        backdrop-blur-xl
+        shadow-[0_20px_60px_rgba(0,0,0,0.35)]
+      "
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            >
+              <LoginForm onClose={() => setIsModalOpen(false)} />
+            </motion.div>
+          </div>
+        )}
       </div>
     </div>
   );

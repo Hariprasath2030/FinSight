@@ -1,20 +1,33 @@
-"use client";
-
 import { useState } from "react";
-import { useTheme } from "next-themes";
 import { useStore } from "@/store";
-import { Mail, Lock, LogIn } from "lucide-react";
+import { Mail, Lock, X, LogIn, EyeOff, Eye } from "lucide-react";
 import { motion } from "framer-motion";
 import { UserRole } from "@/types";
 
-export function LoginForm() {
+interface LoginFormProps {
+  onClose: () => void;
+}
+
+export function LoginForm({ onClose }: LoginFormProps) {
   const login = useStore((state) => state.login);
+
   const [email, setEmail] = useState("demo@example.com");
   const [password, setPassword] = useState("password");
   const [selectedRole, setSelectedRole] = useState<UserRole>("viewer");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const { theme } = useTheme();
+  const [showPassword, setShowPassword] = useState(false);
+  const roleCredentials: Record<UserRole, { email: string; password: string }> =
+    {
+      viewer: {
+        email: "demo@example.com",
+        password: "pass123",
+      },
+      admin: {
+        email: "admin@example.com",
+        password: "admin123",
+      },
+    };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +35,6 @@ export function LoginForm() {
     setIsLoading(true);
 
     try {
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       if (!email || !password) {
@@ -46,67 +58,89 @@ export function LoginForm() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: 30 }}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
+      className="relative flex min-h-[500px] bg-black backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden"
     >
-      <div className="space-y-6">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
-              Welcome Back
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              Sign in to your FinSight account
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition"
+      >
+        <X size={20} />
+      </button>
+      <div
+        className="flex-1 bg-cover bg-center"
+        style={{ backgroundImage: "url(/login.jpg)" }}
+      ></div>
+
+      {/* Right Form */}
+      <div className="flex-1 p-8 flex items-center justify-center">
+        <form onSubmit={handleSubmit} className="w-full space-y-6">
+          <div className="text-center space-y-2">
+            <h2 className="text-4xl font-bold text-white">Sign in</h2>
+            <p className="text-gray-400 text-sm">
+              Welcome back! Please sign in to continue.
             </p>
           </div>
 
           {error && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 text-red-700 dark:text-red-400 text-sm">
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                {error}
-              </motion.div>
+            <div className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl p-3">
+              {error}
             </div>
           )}
 
-          {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-              Email Address
+            <label className="text-sm text-gray-300 mb-2 block">
+              Email address
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+              <Mail className="absolute left-4 top-4 w-5 h-5 text-gray-500" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white"
               />
             </div>
           </div>
 
-          {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-              Password
-            </label>
+            <label className="text-sm text-gray-300 mb-2 block">Password</label>
+
             <div className="relative">
-              <Lock className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="
+        w-full bg-white/5 border border-white/10 rounded-xl
+        pl-12 pr-12 py-3 text-white
+        focus:outline-none focus:ring-2 focus:ring-blue-500/50
+        transition-all duration-300
+      "
+                placeholder="Enter password"
               />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="
+        absolute right-4 top-1/2 -translate-y-1/2
+        text-gray-400 hover:text-white
+        transition-colors duration-200
+      "
+              >
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
+              </button>
             </div>
           </div>
-
-          {/* Role Selection */}
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
               Select Role
@@ -116,19 +150,19 @@ export function LoginForm() {
                 <button
                   key={role}
                   type="button"
-                  onClick={() => setSelectedRole(role as UserRole)}
-                  className={`group relative overflow-hidden p-3 rounded-lg border-2 font-medium transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 ${
+                  onClick={() => {
+                    const newRole = role as UserRole;
+                    setSelectedRole(newRole);
+                    setEmail(roleCredentials[newRole].email);
+                    setPassword(roleCredentials[newRole].password);
+                  }}
+                  className={`py-3 rounded-xl border transition ${
                     selectedRole === role
-                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 shadow-lg"
-                      : theme === "light"
-                        ? "border-black bg-black text-white hover:bg-gray-800 hover:shadow-xl"
-                        : "border-white bg-white text-black hover:bg-gray-200 hover:shadow-xl"
+                      ? "bg-blue-600 border-blue-500 text-white"
+                      : "bg-white/5 border-white/10 text-gray-300"
                   }`}
                 >
-                  <span className="relative z-10">
-                    {role === "viewer" ? "👁️ Viewer" : "⚙️ Admin"}
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
+                  {role === "viewer" ? "👁 Viewer" : "🛡 Admin"}
                 </button>
               ))}
             </div>
@@ -139,31 +173,41 @@ export function LoginForm() {
             </p>
           </div>
 
-          {/* Submit Button */}
           <button
             disabled={isLoading}
-            className={`group relative overflow-hidden w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl`}
             onClick={handleSubmit}
+            className={`
+    group relative w-full overflow-hidden
+    rounded-xl px-6 py-3
+    bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600
+    text-white font-semibold tracking-wide
+    border border-white/10
+    shadow-[0_8px_30px_rgba(37,99,235,0.35)]
+    hover:shadow-[0_12px_40px_rgba(37,99,235,0.5)]
+    hover:scale-[1.02]
+    active:scale-[0.98]
+    disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100
+    transition-all duration-300 ease-out
+  `}
           >
-            <div className="w-full flex items-center justify-center gap-2 relative z-10">
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-out" />
+
+            <div className="relative z-10 flex items-center justify-center gap-2">
               {isLoading ? (
-                <div className="w-5 h-5 animate-spin border-2 border-white border-t-transparent rounded-full" />
+                <>
+                  <div className="w-5 h-5 rounded-full border-2 border-white/80 border-t-transparent animate-spin" />
+                  <span>Signing in...</span>
+                </>
               ) : (
                 <>
-                  <LogIn className="w-5 h-5" />
-                  Sign In
+                  <LogIn className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                  <span>Sign In</span>
                 </>
               )}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
           </button>
-
-          {/* Demo Credentials */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 text-xs text-blue-700 dark:text-blue-400">
-            <p className="font-semibold mb-1">Demo Credentials:</p>
-            <p>Email: demo@example.com</p>
-            <p>Password: password</p>
-          </div>
         </form>
       </div>
     </motion.div>
