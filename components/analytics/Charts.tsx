@@ -97,11 +97,11 @@ export function SavingsRateChart() {
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: isDark ? "#1f2937" : "#ffffff",
-                border: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
+                backgroundColor: "#ffffff",
+                border: "1px solid #e5e7eb",
                 borderRadius: "8px",
               }}
-              labelStyle={{ color: isDark ? "#f3f4f6" : "#000000" }}
+              labelStyle={{ color: "#000000" }}
               formatter={(value) => `${(value as number).toFixed(2)}%`}
             />
             <Line
