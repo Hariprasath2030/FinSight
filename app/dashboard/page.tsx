@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 
 export default function DashboardPage() {
   const transactions = useStore((state) => state.transactions);
+
   const [stats, setStats] = useState({
     totalBalance: 0,
     totalIncome: 0,
@@ -27,9 +28,14 @@ export default function DashboardPage() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.12,
       },
     },
+  };
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0 },
   };
 
   return (
@@ -37,47 +43,110 @@ export default function DashboardPage() {
       variants={containerVariants}
       initial="hidden"
       animate="show"
-      className="space-y-8"
+      className="relative space-y-10"
     >
-      {/* Summary Cards */}
-      <div>
-        <h1 className="mb-6 text-3xl font-bold text-gray-900 dark:text-white">
-          Dashboard Overview
-        </h1>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <StatCard
-            title="Total Balance"
-            value={stats.totalBalance}
-            icon={<DollarSign size={24} />}
-            color="blue"
-          />
-          <StatCard
-            title="Total Income"
-            value={stats.totalIncome}
-            icon={<TrendingUp size={24} />}
-            color="green"
-          />
-          <StatCard
-            title="Total Expenses"
-            value={stats.totalExpenses}
-            icon={<CreditCard size={24} />}
-            color="red"
-          />
-          <StatCard
-            title="Savings Rate"
-            value={stats.savingsPercentage}
-            icon={<Target size={24} />}
-            color="purple"
-            isCurrency={false}
-          />
-        </div>
+      {/* Background glow */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-20 top-10 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+        <div className="absolute right-20 bottom-10 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <BalanceTrendChart />
-        <SpendingCategoryChart />
-      </div>
+      {/* Header */}
+      <motion.div variants={fadeUp}>
+        <p className="text-sm uppercase tracking-[0.25em] text-gray-500 dark:text-gray-400 mb-2">
+          Finance Dashboard
+        </p>
+
+        <h1 className="text-4xl font-bold tracking-tight text-black dark:text-white">
+          Dashboard Overview
+        </h1>
+
+        <p className="mt-2 text-gray-600 dark:text-gray-400">
+          Monitor your balance, income, expenses, and financial growth in real
+          time.
+        </p>
+      </motion.div>
+
+      {/* Summary Cards */}
+      <motion.div
+        variants={fadeUp}
+        className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4"
+      >
+        <StatCard
+          title="Total Balance"
+          value={stats.totalBalance}
+          icon={<DollarSign size={22} />}
+          color="blue"
+        />
+
+        <StatCard
+          title="Total Income"
+          value={stats.totalIncome}
+          icon={<TrendingUp size={22} />}
+          color="green"
+        />
+
+        <StatCard
+          title="Total Expenses"
+          value={stats.totalExpenses}
+          icon={<CreditCard size={22} />}
+          color="red"
+        />
+
+        <StatCard
+          title="Savings Rate"
+          value={stats.savingsPercentage}
+          icon={<Target size={22} />}
+          color="purple"
+          isCurrency={false}
+        />
+      </motion.div>
+
+      {/* Charts section */}
+      <motion.div variants={fadeUp}>
+        <div className="mb-5">
+          <h2 className="text-2xl font-semibold text-black dark:text-white">
+            Financial Insights
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            Visual representation of your balance trends and spending categories
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+          <motion.div
+            whileHover={{ y: -4 }}
+            transition={{ duration: 0.25 }}
+            className="
+              rounded-3xl
+              border border-black/10 dark:border-white/10
+              bg-white/80 dark:bg-white/[0.03]
+              backdrop-blur-2xl
+              p-6
+              shadow-[0_10px_40px_rgba(0,0,0,0.06)]
+              dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
+            "
+          >
+            <BalanceTrendChart />
+          </motion.div>
+
+          <motion.div
+            whileHover={{ y: -4 }}
+            transition={{ duration: 0.25 }}
+            className="
+              rounded-3xl
+              border border-black/10 dark:border-white/10
+              bg-white/80 dark:bg-white/[0.03]
+              backdrop-blur-2xl
+              p-6
+              shadow-[0_10px_40px_rgba(0,0,0,0.06)]
+              dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
+            "
+          >
+            <SpendingCategoryChart />
+          </motion.div>
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
