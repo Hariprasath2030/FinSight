@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useTheme } from "next-themes";
 import { useStore } from "@/store";
 import { getCategorySpending, formatCurrency } from "@/lib/calculations";
 import { useEffect, useState } from "react";
@@ -25,7 +26,7 @@ const COLORS = [
 
 export function SpendingCategoryChart() {
   const transactions = useStore((state) => state.transactions);
-  const theme = useStore((state) => state.theme);
+  const { theme } = useTheme();
   const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {

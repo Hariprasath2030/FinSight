@@ -3,22 +3,23 @@
 import { useState } from "react";
 import { Moon, Sun, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 import { useStore } from "@/store";
 
 export function Header() {
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [showMoon, setShowMoon] = useState(true);
+  const { setTheme } = useTheme();
 
-  const theme = useStore((state) => state.theme);
-  const toggleTheme = useStore((state) => state.toggleTheme);
   const userRole = useStore((state) => state.userRole);
   const setUserRole = useStore((state) => state.setUserRole);
   const saveToLocalStorage = useStore((state) => state.saveToLocalStorage);
   const logout = useStore((state) => state.logout);
 
   const handleThemeToggle = () => {
-    toggleTheme();
-    setTimeout(() => saveToLocalStorage(), 0);
+    setShowMoon(!showMoon);
+    setTheme(showMoon ? "dark" : "light");
   };
 
   const handleRoleSwitch = () => {
@@ -68,10 +69,13 @@ export function Header() {
         {/* Theme Toggle */}
         <button
           onClick={handleThemeToggle}
-          className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-900"
+          className="group relative overflow-hidden rounded-lg p-2 transition-all duration-300 ease-in-out hover:scale-110 active:scale-95 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 shadow-lg hover:bg-slate-300 dark:hover:bg-slate-600 hover:shadow-xl"
           aria-label="Toggle theme"
         >
-          {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+          <div className="relative z-10 transition-transform duration-300 ease-in-out group-hover:rotate-12">
+            {showMoon ? <Moon size={20} /> : <Sun size={20} />}
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
         </button>
 
         {/* Logout */}

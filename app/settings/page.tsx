@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { Download, Moon, Sun, Database } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useStore } from "@/store";
 import { motion } from "framer-motion";
 
 export default function SettingsPage() {
-  const theme = useStore((state) => state.theme);
-  const toggleTheme = useStore((state) => state.toggleTheme);
+  const { setTheme } = useTheme();
   const userRole = useStore((state) => state.userRole);
   const setUserRole = useStore((state) => state.setUserRole);
   const transactions = useStore((state) => state.transactions);
@@ -18,9 +18,8 @@ export default function SettingsPage() {
     setIsMounted(true);
   }, []);
 
-  const handleThemeChange = () => {
-    toggleTheme();
-    setTimeout(() => saveToLocalStorage(), 0);
+  const handleThemeChange = (newTheme: string) => {
+    setTheme(newTheme);
   };
 
   const handleRoleChange = (newRole: "viewer" | "admin") => {
@@ -94,7 +93,7 @@ export default function SettingsPage() {
         className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900"
       >
         <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-white">
-          {theme === "light" ? <Sun size={24} /> : <Moon size={24} />}
+          <Sun size={24} />
           Theme
         </h2>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
@@ -103,12 +102,8 @@ export default function SettingsPage() {
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <button
-            onClick={handleThemeChange}
-            className={`rounded-lg border-2 p-4 text-center transition-colors ${
-              theme === "light"
-                ? "border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20"
-                : "border-gray-300 dark:border-gray-700"
-            }`}
+            onClick={() => handleThemeChange("light")}
+            className="rounded-lg border-2 p-4 text-center transition-colors border-gray-300 dark:border-gray-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:border-blue-400 dark:hover:bg-blue-900/20"
           >
             <div className="mb-2 flex justify-center">
               <Sun size={32} className="text-yellow-500" />
@@ -119,12 +114,8 @@ export default function SettingsPage() {
           </button>
 
           <button
-            onClick={handleThemeChange}
-            className={`rounded-lg border-2 p-4 text-center transition-colors ${
-              theme === "dark"
-                ? "border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20"
-                : "border-gray-300 dark:border-gray-700"
-            }`}
+            onClick={() => handleThemeChange("dark")}
+            className="rounded-lg border-2 p-4 text-center transition-colors border-gray-300 dark:border-gray-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:border-blue-400 dark:hover:bg-blue-900/20"
           >
             <div className="mb-2 flex justify-center">
               <Moon size={32} className="text-blue-600 dark:text-blue-400" />

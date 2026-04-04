@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -14,18 +15,14 @@ import {
 } from "recharts";
 import { useStore } from "@/store";
 import { getMonthlyComparison, formatCurrency } from "@/lib/calculations";
-import { useEffect, useState } from "react";
 
 export function IncomExpenseChart() {
   const transactions = useStore((state) => state.transactions);
-  const theme = useStore((state) => state.theme);
   const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     setData(getMonthlyComparison(transactions));
   }, [transactions]);
-
-  const isDark = theme === "dark";
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
@@ -35,27 +32,20 @@ export function IncomExpenseChart() {
       {data.length > 0 ? (
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data}>
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke={isDark ? "#374151" : "#e5e7eb"}
-            />
-            <XAxis
-              dataKey="month"
-              stroke={isDark ? "#9ca3af" : "#6b7280"}
-              style={{ fontSize: 12 }}
-            />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="month" stroke="#6b7280" style={{ fontSize: 12 }} />
             <YAxis
-              stroke={isDark ? "#9ca3af" : "#6b7280"}
+              stroke="#6b7280"
               style={{ fontSize: 12 }}
               tickFormatter={(value) => `$${(value / 1000).toFixed(1)}k`}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: isDark ? "#1f2937" : "#ffffff",
-                border: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
+                backgroundColor: "#ffffff",
+                border: "1px solid #e5e7eb",
                 borderRadius: "8px",
               }}
-              labelStyle={{ color: isDark ? "#f3f4f6" : "#000000" }}
+              labelStyle={{ color: "#000000" }}
               formatter={(value) => formatCurrency(value as number)}
             />
             <Legend />
@@ -74,7 +64,6 @@ export function IncomExpenseChart() {
 
 export function SavingsRateChart() {
   const transactions = useStore((state) => state.transactions);
-  const theme = useStore((state) => state.theme);
   const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
@@ -87,8 +76,6 @@ export function SavingsRateChart() {
     setData(savingsData);
   }, [transactions]);
 
-  const isDark = theme === "dark";
-
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
       <h2 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">
@@ -97,17 +84,10 @@ export function SavingsRateChart() {
       {data.length > 0 ? (
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke={isDark ? "#374151" : "#e5e7eb"}
-            />
-            <XAxis
-              dataKey="month"
-              stroke={isDark ? "#9ca3af" : "#6b7280"}
-              style={{ fontSize: 12 }}
-            />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="month" stroke="#6b7280" style={{ fontSize: 12 }} />
             <YAxis
-              stroke={isDark ? "#9ca3af" : "#6b7280"}
+              stroke="#6b7280"
               style={{ fontSize: 12 }}
               label={{
                 value: "Percentage (%)",

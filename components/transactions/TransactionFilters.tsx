@@ -37,9 +37,10 @@ export function TransactionFilters() {
               resetFilters();
               saveToLocalStorage();
             }}
-            className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+            className="group relative overflow-hidden text-sm transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 px-3 py-1 rounded-lg bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-black dark:hover:bg-slate-200"
           >
-            Reset Filters
+            <span className="relative z-10">Reset Filters</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
           </button>
         )}
       </div>

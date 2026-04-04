@@ -11,6 +11,17 @@ import { motion } from "framer-motion";
 export default function TransactionsPage() {
   const userRole = useStore((state) => state.userRole);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState<any>(null);
+
+  const handleEdit = (transaction: any) => {
+    setEditingTransaction(transaction);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingTransaction(null);
+  };
 
   return (
     <motion.div
@@ -30,20 +41,22 @@ export default function TransactionsPage() {
         {userRole === "admin" && (
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="group relative overflow-hidden flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white font-medium transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 hover:bg-blue-700 shadow-lg hover:shadow-xl"
           >
-            <Plus size={20} />
-            Add Transaction
+            <Plus size={20} className="relative z-10" />
+            <span className="relative z-10">Add Transaction</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
           </button>
         )}
       </div>
 
       <TransactionFilters />
-      <TransactionTable />
+      <TransactionTable onEdit={handleEdit} />
 
       <TransactionModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
+        editingTransaction={editingTransaction}
       />
     </motion.div>
   );

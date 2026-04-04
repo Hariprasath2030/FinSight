@@ -70,9 +70,10 @@ export function TransactionModal({
           </h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="group relative overflow-hidden rounded-lg p-2 transition-all duration-300 ease-in-out hover:scale-110 active:scale-95 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
           >
-            <X size={24} />
+            <X size={24} className="relative z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
           </button>
         </div>
 
@@ -166,15 +167,23 @@ export function TransactionModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+              className={`group relative overflow-hidden flex-1 rounded-lg border-2 px-4 py-2 font-medium transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 ${
+                theme === "light"
+                  ? "border-black bg-black text-white hover:bg-gray-800 hover:shadow-xl"
+                  : "border-white bg-white text-black hover:bg-gray-200 hover:shadow-xl"
+              }`}
             >
-              Cancel
+              <span className="relative z-10">Cancel</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
             </button>
             <button
               type="submit"
-              className="flex-1 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+              className="group relative overflow-hidden flex-1 rounded-lg bg-blue-600 px-4 py-2 text-white font-medium transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 hover:bg-blue-700 shadow-lg hover:shadow-xl"
             >
-              {editingTransaction ? "Update" : "Add"}
+              <span className="relative z-10">
+                {editingTransaction ? "Update" : "Add"}
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
             </button>
           </div>
         </form>

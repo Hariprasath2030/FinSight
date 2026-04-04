@@ -194,13 +194,16 @@ export function SignupForm() {
                   key={role}
                   type="button"
                   onClick={() => setSelectedRole(role as UserRole)}
-                  className={`p-3 rounded-lg border-2 font-medium transition-all text-sm ${
+                  className={`group relative overflow-hidden p-3 rounded-lg border-2 font-medium transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 text-sm ${
                     selectedRole === role
-                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400"
+                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 shadow-lg"
                       : "border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-500"
                   }`}
                 >
-                  {role === "viewer" ? "👁️ Viewer" : "⚙️ Admin"}
+                  <span className="relative z-10">
+                    {role === "viewer" ? "👁️ Viewer" : "⚙️ Admin"}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                 </button>
               ))}
             </div>
@@ -239,10 +242,10 @@ export function SignupForm() {
           {/* Submit Button */}
           <button
             disabled={isLoading}
-            className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition-all flex items-center justify-center gap-2"
+            className={`group relative overflow-hidden w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl`}
             onClick={handleSubmit}
           >
-            <div className="w-full flex items-center justify-center gap-2">
+            <div className="w-full flex items-center justify-center gap-2 relative z-10">
               {isLoading ? (
                 <div className="w-5 h-5 animate-spin border-2 border-white border-t-transparent rounded-full" />
               ) : (
@@ -252,6 +255,7 @@ export function SignupForm() {
                 </>
               )}
             </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
           </button>
         </form>
       </div>

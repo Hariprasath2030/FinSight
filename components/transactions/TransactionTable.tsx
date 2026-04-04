@@ -10,7 +10,11 @@ import {
 } from "@/lib/calculations";
 import { motion } from "framer-motion";
 
-export function TransactionTable() {
+interface TransactionTableProps {
+  onEdit?: (transaction: any) => void;
+}
+
+export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
   const transactions = useStore((state) => state.transactions);
   const searchQuery = useStore((state) => state.searchQuery);
   const selectedCategory = useStore((state) => state.selectedCategory);
@@ -122,14 +126,19 @@ export function TransactionTable() {
                   {userRole === "admin" && (
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <button className="rounded p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
-                          <Edit2 size={16} />
+                        <button
+                          onClick={() => onEdit?.(transaction)}
+                          className="group relative overflow-hidden rounded p-2 transition-all duration-300 ease-in-out hover:scale-110 active:scale-95 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                        >
+                          <Edit2 size={16} className="relative z-10" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                         </button>
                         <button
                           onClick={() => handleDelete(transaction.id)}
-                          className="rounded p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
+                          className="group relative overflow-hidden rounded p-2 text-red-600 transition-all duration-300 ease-in-out hover:scale-110 active:scale-95 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
                         >
-                          <Trash2 size={16} />
+                          <Trash2 size={16} className="relative z-10" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-200/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                         </button>
                       </div>
                     </td>
@@ -166,22 +175,30 @@ export function TransactionTable() {
             <button
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
-              className="rounded-lg border border-gray-300 p-2 disabled:opacity-50 dark:border-gray-700"
+              className={`group relative overflow-hidden rounded-lg border p-2 transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 disabled:opacity-50 ${
+                theme === "light"
+                  ? "border-black text-black hover:bg-black hover:text-white"
+                  : "border-white text-white hover:bg-white hover:text-black"
+              }`}
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={20} className="relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
             </button>
             <div className="flex items-center gap-2">
               {Array.from({ length: totalPages }).map((_, i) => (
                 <button
                   key={i + 1}
                   onClick={() => setCurrentPage(i + 1)}
-                  className={`rounded px-3 py-2 text-sm font-medium ${
+                  className={`group relative overflow-hidden rounded px-3 py-2 text-sm font-medium transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 ${
                     currentPage === i + 1
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : theme === "light"
+                        ? "text-black hover:bg-black hover:text-white"
+                        : "text-white hover:bg-white hover:text-black"
                   }`}
                 >
-                  {i + 1}
+                  <span className="relative z-10">{i + 1}</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                 </button>
               ))}
             </div>
@@ -190,9 +207,14 @@ export function TransactionTable() {
                 setCurrentPage(Math.min(totalPages, currentPage + 1))
               }
               disabled={currentPage === totalPages}
-              className="rounded-lg border border-gray-300 p-2 disabled:opacity-50 dark:border-gray-700"
+              className={`group relative overflow-hidden rounded-lg border p-2 transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 disabled:opacity-50 ${
+                theme === "light"
+                  ? "border-black text-black hover:bg-black hover:text-white"
+                  : "border-white text-white hover:bg-white hover:text-black"
+              }`}
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={20} className="relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
             </button>
           </div>
         </div>
