@@ -77,17 +77,53 @@ export function LandingPage() {
   ];
 
   const stats = [
-    { number: "10K+", label: "Active Users", icon: "👥" },
-    { number: "99.9%", label: "Uptime", icon: "⚡" },
-    { number: "100%", label: "Data Security", icon: "🔒" },
+    { value: 10000, suffix: "+", label: "Active Users", icon: "👥" },
+    { value: 99.9, suffix: "%", label: "Uptime", icon: "⚡" },
+    { value: 100, suffix: "%", label: "Data Security", icon: "🔒" },
   ];
+  function CountUp({
+    end,
+    duration = 2000,
+    suffix = "",
+  }: {
+    end: number;
+    duration?: number;
+    suffix?: string;
+  }) {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      let start = 0;
+      const increment = end / (duration / 16);
+
+      const timer = setInterval(() => {
+        start += increment;
+
+        if (start >= end) {
+          setCount(end);
+          clearInterval(timer);
+        } else {
+          setCount(start);
+        }
+      }, 16);
+
+      return () => clearInterval(timer);
+    }, [end, duration]);
+
+    return (
+      <span>
+        {end % 1 !== 0 ? count.toFixed(1) : Math.floor(count)}
+        {suffix}
+      </span>
+    );
+  }
 
   return (
     <div className="relative min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300 overflow-hidden">
       <div className="absolute inset-0 z-0">
         <ShapeGrid
-          speed={0.24}
-          squareSize={80}
+          speed={0.20}
+          squareSize={100}
           direction="diagonal"
           borderColor={resolvedTheme === "dark" ? "#4b5563" : "#cbd5e1"}
           hoverFillColor={resolvedTheme === "dark" ? "#1f2937" : "#e5e7eb"}
@@ -223,7 +259,7 @@ export function LandingPage() {
             </div>
           </div>
         </nav>
-        <section className="max-w-7xl mx-auto px-6 pt-50 pb-24">
+        <section className="max-w-7xl mx-auto px-6 pt-50 py-12">
           <div className="flex flex-col items-center text-center">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -318,7 +354,7 @@ export function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="relative py-24 overflow-hidden">
+        <section className="relative py-28 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-10 left-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
             <div className="absolute bottom-10 right-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
@@ -402,7 +438,7 @@ export function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="relative py-24 overflow-hidden">
+        <section className="relative py-12 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute left-1/4 top-10 h-60 w-60 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
             <div className="absolute right-1/4 bottom-10 h-60 w-60 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
@@ -429,42 +465,45 @@ export function LandingPage() {
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{
                     duration: 0.5,
                     delay: idx * 0.15,
                   }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  viewport={{ once: true }}
                   className="
-            rounded-3xl
-            border border-black/10 dark:border-white/10
-            bg-white/80 dark:bg-white/[0.03]
-            backdrop-blur-2xl
-            p-8
-            text-center
-            shadow-[0_10px_40px_rgba(0,0,0,0.06)]
-            dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
-            transition-all duration-300
-          "
+                rounded-3xl
+                border border-black/10 dark:border-white/10
+                bg-white/80 dark:bg-white/[0.03]
+                backdrop-blur-2xl
+                p-8
+                text-center
+                shadow-[0_10px_40px_rgba(0,0,0,0.06)]
+                dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
+                transition-all duration-300
+              "
                 >
                   <div
                     className="
-              mx-auto mb-5
-              flex h-16 w-16 items-center justify-center
-              rounded-2xl
-              border border-black/10 dark:border-white/10
-              bg-black text-white
-              dark:bg-white dark:text-black
-              text-2xl
-              shadow-lg
-            "
+                  mx-auto mb-5
+                  flex h-16 w-16 items-center justify-center
+                  rounded-2xl
+                  border border-black/10 dark:border-white/10
+                  bg-black text-white
+                  dark:bg-white dark:text-black
+                  text-2xl
+                  shadow-lg
+                "
                   >
                     {stat.icon}
                   </div>
 
                   <h3 className="text-5xl font-bold tracking-tight mb-3">
-                    {stat.number}
+                    <CountUp
+                      end={stat.value}
+                      duration={1800}
+                      suffix={stat.suffix}
+                    />
                   </h3>
 
                   <p className="text-gray-600 dark:text-gray-400 text-lg font-medium">
@@ -481,7 +520,7 @@ export function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="relative py-28 overflow-hidden border-t border-black/10 dark:border-white/10">
+        <section className="relative py-12 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-10 left-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
             <div className="absolute bottom-10 right-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
@@ -655,7 +694,7 @@ export function LandingPage() {
           <h1
             className="
       absolute bottom-0 left-1/2
-      -translate-x-1/3 -translate-y-4
+      -translate-x-1/3 -translate-y-10 py-4
       text-[7rem] md:text-[14rem]
       font-extrabold tracking-tight
       text-black/[0.04] dark:text-white/[0.04]
@@ -765,7 +804,7 @@ export function LandingPage() {
               </div>
             </div>
 
-            <div className="my-12 border-t border-black/10 dark:border-white/10" />
+            <div className="my-12 border-t border-black/10 dark:border-white/10 py-6" />
             <div className="flex flex-col md:flex-row justify-between items-center gap-2 mt-40">
               <p className="text-sm text-gray-500 dark:text-gray-400 text-center md:text-left">
                 © {new Date().getFullYear()} FinSight. All rights reserved.
