@@ -54,12 +54,11 @@ export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
   };
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-      {/* Table */}
+    <div className="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-black">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-200 dark:border-gray-800">
+            <tr className="border-b border-gray-200 dark:border-gray-500 bg-gradient-to-r dark:from-gray-950 dark:via-gray-950 dark:to-gray-950 dark:text-white">
               <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
                 Date
               </th>
@@ -90,7 +89,7 @@ export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: index * 0.05 }}
-                  className="border-b border-gray-200 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-800"
+                  className="border-b border-gray-200 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950"
                 >
                   <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
                     {formatDate(transaction.date)}
@@ -105,8 +104,8 @@ export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
                     <span
                       className={`rounded-full px-3 py-1 text-xs font-medium ${
                         transaction.type === "income"
-                          ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-400"
-                          : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-400"
+                          ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-100"
+                          : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-100"
                       }`}
                     >
                       {transaction.type.charAt(0).toUpperCase() +
@@ -158,8 +157,7 @@ export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
           </tbody>
         </table>
       </div>
-
-      {/* Pagination */}
+=
       {totalPages > 1 && (
         <div className="flex items-center justify-between border-t border-gray-200 px-6 py-4 dark:border-gray-800">
           <p className="text-sm text-gray-600 dark:text-gray-400">
