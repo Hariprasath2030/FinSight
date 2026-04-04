@@ -13,9 +13,9 @@ import { useStore } from "@/store";
 import { getCategorySpending, formatCurrency } from "@/lib/calculations";
 import { useEffect, useState } from "react";
 
-const COLORS = [
+const BASE_COLORS = [
   "#3b82f6", // blue
-  "#10b981", // emerald
+  "#10b981", // green
   "#f59e0b", // amber
   "#ef4444", // red
   "#8b5cf6", // violet
@@ -35,11 +35,18 @@ export function SpendingCategoryChart() {
 
   const isDark = theme === "dark";
 
+  const cardBg = isDark
+    ? "bg-black/70 border-gray-800 shadow-[0_10px_40px_rgba(255,255,255,0.05)]"
+    : "bg-white/80 border-gray-200 shadow-[0_10px_40px_rgba(0,0,0,0.08)]";
+
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+    <div
+      className={`rounded-2xl border p-6 backdrop-blur-xl ${cardBg} transition-all duration-500`}
+    >
       <h2 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">
         Spending by Category
       </h2>
+
       {data.length > 0 ? (
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
@@ -49,26 +56,46 @@ export function SpendingCategoryChart() {
               cy="50%"
               innerRadius={60}
               outerRadius={100}
-              paddingAngle={2}
+              paddingAngle={4}
               dataKey="value"
+              isAnimationActive={true}
+              animationDuration={1200}
             >
               {data.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
+                  fill={BASE_COLORS[index % BASE_COLORS.length]}
+                  style={{ transition: "all 0.3s ease-in-out" }}
                 />
               ))}
             </Pie>
+
             <Tooltip
               contentStyle={{
-                backgroundColor: isDark ? "#1f2937" : "#ffffff",
+                backgroundColor: isDark ? "#e5e7eb" : "#ffffff",
                 border: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
-                borderRadius: "8px",
+                borderRadius: "12px",
+                padding: "12px",
+                backdropFilter: "blur(6px)",
+                boxShadow: isDark
+                  ? "0 4px 20px rgba(255,255,255,0.05)"
+                  : "0 4px 20px rgba(0,0,0,0.1)",
               }}
-              labelStyle={{ color: isDark ? "#f3f4f6" : "#000000" }}
+              labelStyle={{
+                color: isDark ? "#f3f4f6" : "#000000",
+                fontWeight: 500,
+              }}
               formatter={(value) => formatCurrency(value as number)}
             />
-            <Legend />
+
+            <Legend
+              iconType="circle"
+              wrapperStyle={{
+                paddingTop: 10,
+                color: isDark ? "#f3f4f6" : "#374151",
+                fontWeight: 500,
+              }}
+            />
           </PieChart>
         </ResponsiveContainer>
       ) : (

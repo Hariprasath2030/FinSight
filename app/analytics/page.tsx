@@ -7,15 +7,25 @@ import {
 } from "@/components/analytics/Charts";
 import { BalanceTrendChart } from "@/components/dashboard/BalanceTrendChart";
 import { SpendingCategoryChart } from "@/components/dashboard/SpendingCategoryChart";
+import { useState, useEffect } from "react";
+import { SkeletonChart } from "@/components/common/Skeleton";
 
 const MotionDiv = motion.div as any;
 
 export default function AnalyticsPage() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <MotionDiv
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="space-y-8"
+      transition={{ duration: 0.6 }}
+      className="relative space-y-10"
     >
       <div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -25,15 +35,14 @@ export default function AnalyticsPage() {
           Comprehensive financial analysis and trends
         </p>
       </div>
-
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <IncomExpenseChart />
-        <SavingsRateChart />
+        {loading ? <SkeletonChart /> : <IncomExpenseChart />}
+        {loading ? <SkeletonChart /> : <SavingsRateChart />}
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <BalanceTrendChart />
-        <SpendingCategoryChart />
+        {loading ? <SkeletonChart /> : <BalanceTrendChart />}
+        {loading ? <SkeletonChart /> : <SpendingCategoryChart />}
       </div>
     </MotionDiv>
   );

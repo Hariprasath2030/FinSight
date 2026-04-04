@@ -36,7 +36,7 @@ export function StatCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900"
+      className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-black"
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">

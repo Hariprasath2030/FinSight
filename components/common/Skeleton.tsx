@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function SkeletonCard() {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+    <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-black">
       <motion.div
         animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 2, repeat: Infinity }}
@@ -20,7 +20,7 @@ export function SkeletonCard() {
 
 export function SkeletonTable() {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+    <div className="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-black">
       <div className="p-6">
         <div className="space-y-3">
           {Array.from({ length: 5 }).map((_, i) => (
@@ -43,7 +43,7 @@ export function SkeletonTable() {
 
 export function SkeletonChart() {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+    <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-black">
       <motion.div
         animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 2, repeat: Infinity }}
