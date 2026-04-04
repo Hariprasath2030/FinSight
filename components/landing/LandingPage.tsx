@@ -16,15 +16,12 @@ import { useTheme } from "next-themes";
 import { useStore } from "@/store";
 import { useRouter } from "next/navigation";
 import { LoginForm } from "./LoginForm";
-import { SignupForm } from "./SignupForm";
 import ShapeGrid from "@/components/ShapeGrid";
 
 export function LandingPage() {
   const isAuthenticated = useStore((state) => state.isAuthenticated);
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const loadFromLocalStorage = useStore((state) => state.loadFromLocalStorage);
-
-  const [showLogin, setShowLogin] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -41,13 +38,7 @@ export function LandingPage() {
     }
   }, [isAuthenticated, isMounted, router]);
 
-  const handleThemeToggle = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
   if (!isMounted) return null;
-
-  const isDark = theme === "dark";
 
   const features = [
     {
@@ -87,14 +78,13 @@ export function LandingPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300 overflow-hidden">
-      {/* Animated Background */}
       <div className="absolute inset-0 z-0">
         <ShapeGrid
           speed={0.24}
-          squareSize={60}
+          squareSize={80}
           direction="diagonal"
-          borderColor={isDark ? "#d1d5db" : "#2a2a2a"}
-          hoverFillColor={isDark ? "#ffffff" : "#111111"}
+          borderColor={resolvedTheme === "dark" ? "#4b5563" : "#cbd5e1"}
+          hoverFillColor={resolvedTheme === "dark" ? "#1f2937" : "#e5e7eb"}
           shape="hexagon"
           hoverTrailAmount={0}
         />
@@ -114,67 +104,160 @@ export function LandingPage() {
               </div>
               <span className="text-2xl font-bold">FinSight</span>
             </motion.div>
-
             <div className="flex items-center gap-4">
               <button
-                onClick={handleThemeToggle}
+                onClick={() =>
+                  setTheme(resolvedTheme === "light" ? "dark" : "light")
+                }
                 className="
-    group relative overflow-hidden
-    h-11 w-11
-    rounded-2xl
-    border border-black/10 dark:border-white/10
-    bg-white/80 dark:bg-black/60
-    backdrop-blur-xl
-    text-black dark:text-white
-    shadow-[0_8px_24px_rgba(0,0,0,0.12)]
-    dark:shadow-[0_8px_24px_rgba(255,255,255,0.08)]
-    hover:scale-105
-    hover:shadow-[0_12px_32px_rgba(0,0,0,0.18)]
-    dark:hover:shadow-[0_12px_32px_rgba(255,255,255,0.12)]
-    active:scale-95
-    transition-all duration-300
-    flex items-center justify-center
-  "
+      group relative
+      h-10 w-10
+      rounded-2xl
+      border border-black/10 dark:border-white/10
+      bg-white/70 dark:bg-white/[0.05]
+      backdrop-blur-2xl
+      shadow-[0_8px_30px_rgba(0,0,0,0.08)]
+      dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)]
+      hover:scale-105
+      hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]
+      dark:hover:shadow-[0_12px_40px_rgba(255,255,255,0.08)]
+      active:scale-95
+      transition-all duration-300
+      flex items-center justify-center
+      overflow-hidden
+    "
                 aria-label="Toggle theme"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                <div
+                  className="
+        absolute inset-0
+        bg-gradient-to-r
+        from-transparent
+        via-white/20
+        dark:via-white/10
+        to-transparent
+        -translate-x-full
+        group-hover:translate-x-full
+        transition-transform duration-1000
+      "
+                />
 
+                {/* Icon */}
                 <div className="relative z-10 transition-transform duration-300 group-hover:rotate-12">
-                  {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                  {resolvedTheme === "light" ? (
+                    <Moon className="w-4 h-4 text-slate-700" />
+                  ) : (
+                    <Sun className="w-4 h-4 text-yellow-400 drop-shadow-md" />
+                  )}
                 </div>
               </button>
 
               <button
-                onClick={() => {
-                  setShowLogin(true);
-                  setIsModalOpen(true);
-                }}
+                onClick={() => setIsModalOpen(true)}
                 className="
     group relative overflow-hidden
     flex items-center gap-2
-    px-4 py-2.5
+    px-5 py-3
     rounded-2xl
-    border border-white/10 dark:border-white/10
-    bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600
-    text-white font-semibold text-sm tracking-wide
-    shadow-[0_8px_30px_rgba(37,99,235,0.35)]
-    hover:shadow-[0_12px_40px_rgba(37,99,235,0.5)]
+    border border-black/10 dark:border-white/10
+    bg-white text-black
+    dark:bg-white/10 dark:text-white
+    backdrop-blur-2xl
+    shadow-[0_10px_30px_rgba(0,0,0,0.08)]
+    dark:shadow-[0_10px_30px_rgba(255,255,255,0.05)]
     hover:scale-105
+    hover:shadow-[0_14px_40px_rgba(0,0,0,0.12)]
+    dark:hover:shadow-[0_14px_40px_rgba(255,255,255,0.08)]
     active:scale-95
     transition-all duration-300
   "
                 aria-label="Open login"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                {/* Shine effect */}
+                <div
+                  className="
+      absolute inset-0
+      bg-gradient-to-r
+      from-transparent
+      via-black/5
+      dark:via-white/10
+      to-transparent
+      -translate-x-full
+      group-hover:translate-x-full
+      transition-transform duration-1000
+    "
+                />
 
                 <LogIn className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-
-                <span className="relative z-10">Login</span>
+                <span className="relative z-10 font-medium tracking-wide">
+                  Login
+                </span>
               </button>
             </div>
           </div>
         </nav>
+        <section className="max-w-7xl mx-auto px-6 pt-32 pb-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-5xl lg:text-7xl font-bold leading-tight"
+            >
+              Take Control of Your
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                {" "}
+                Financial Future
+              </span>
+            </motion.h1>
 
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-xl text-gray-600 dark:text-gray-300 mt-6 leading-relaxed max-w-xl"
+            >
+              Smart budgeting, intelligent insights, real-time expense tracking,
+              and AI-powered savings recommendations — all in one platform.
+            </motion.p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              {["Track", "Analyze", "Save", "Invest"].map((text) => (
+                <span
+                  key={text}
+                  className="px-4 py-2 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium"
+                >
+                  {text}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-10 flex gap-4">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                Get Started
+              </button>
+
+              <button className="px-6 py-3 rounded-2xl border border-gray-300 dark:border-white/10">
+                Learn More
+              </button>
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="rounded-3xl bg-white/90 dark:bg-black/70 border border-gray-200 dark:border-white/10 p-8 backdrop-blur-xl shadow-2xl">
+              <div className="space-y-5">
+                <div className="h-6 w-40 bg-blue-500 rounded-lg" />
+                <div className="h-28 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600" />
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="h-24 rounded-2xl bg-gray-100 dark:bg-white/5" />
+                  <div className="h-24 rounded-2xl bg-gray-100 dark:bg-white/5" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <section className="max-w-7xl mx-auto px-6 pt-32 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <motion.h1
@@ -257,7 +340,110 @@ export function LandingPage() {
             ))}
           </div>
         </section>
+        <section className="relative py-24 border-t border-white/10 bg-black overflow-hidden">
+          {/* Grid background */}
+          <div className="absolute inset-0 opacity-20">
+            <div
+              className="h-full w-full"
+              style={{
+                backgroundImage: `
+          linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)
+        `,
+                backgroundSize: "28px 28px",
+              }}
+            />
+          </div>
 
+          <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
+            {/* LEFT SIDE */}
+            <div>
+              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-xl mb-8">
+                <DollarSign className="w-6 h-6 text-blue-500" />
+              </div>
+
+              <h2 className="text-5xl font-bold text-white mb-6">Contact us</h2>
+
+              <p className="text-lg text-gray-400 leading-relaxed max-w-lg">
+                We are always looking for ways to improve our platform and
+                financial services. Contact us and let us know how we can help
+                you achieve financial freedom.
+              </p>
+
+              <div className="mt-10 flex flex-wrap gap-6 text-gray-400 text-sm">
+                <span>support@finsight.ai</span>
+                <span>•</span>
+                <span>+91 98765 43210</span>
+                <span>•</span>
+                <span>hello@finsight.ai</span>
+              </div>
+
+              {/* Location box */}
+              <div className="mt-20 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
+                <p className="text-sm text-gray-400 mb-2">We are here</p>
+                <h4 className="text-xl font-semibold text-white">
+                  Pune, India
+                </h4>
+                <p className="text-gray-500 mt-2">
+                  Helping users manage smarter finances globally.
+                </p>
+              </div>
+            </div>
+
+            {/* RIGHT SIDE FORM */}
+            <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-2xl p-8 shadow-2xl">
+              <div className="space-y-6">
+                <div>
+                  <label className="text-white font-medium block mb-2">
+                    Full name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter your full name"
+                    className="w-full rounded-2xl bg-white/5 border border-white/10 px-5 py-4 text-white placeholder:text-gray-500 outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-white font-medium block mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="w-full rounded-2xl bg-white/5 border border-white/10 px-5 py-4 text-white placeholder:text-gray-500 outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-white font-medium block mb-2">
+                    Company
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="FinSight Pvt Ltd"
+                    className="w-full rounded-2xl bg-white/5 border border-white/10 px-5 py-4 text-white placeholder:text-gray-500 outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-white font-medium block mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    rows={5}
+                    placeholder="Type your message here"
+                    className="w-full rounded-2xl bg-white/5 border border-white/10 px-5 py-4 text-white placeholder:text-gray-500 outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <button className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:scale-[1.02] transition-all duration-300 shadow-xl">
+                  Send Message
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
         {/* Footer */}
         <footer className="border-t border-gray-200 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-md py-12">
           <div className="max-w-7xl mx-auto px-6 text-center text-gray-600 dark:text-gray-400">
