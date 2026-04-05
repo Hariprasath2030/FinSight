@@ -58,11 +58,12 @@ export const TextGenerateEffect = ({
     <div className={className}>
       <div className="mt-4">
         <div
-          className="text-5xl lg:text-7xl
-        font-bold
-        leading-[1.05]
-        tracking-tight
-        max-w-7xl"
+          className="text-4xl sm:text-5xl lg:text-7xl
+            font-bold
+            leading-tight sm:leading-[1.05]
+            tracking-tight
+            max-w-7xl
+            mx-auto"
         >
           {renderWords()}
         </div>

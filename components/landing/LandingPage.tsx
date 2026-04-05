@@ -170,83 +170,112 @@ export function LandingPage() {
       </div>
 
       <div className="relative z-10">
-        <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white dark:bg-black border-b border-gray-200 dark:border-white/10 transition-colors duration-300">
-          <div className="px-6 py-4 flex justify-between items-center">
+        <nav
+          className="
+    fixed top-0 w-full z-50
+    backdrop-blur-md
+    bg-white dark:bg-black
+    border-b border-gray-200 dark:border-white/10
+    transition-colors duration-300
+  "
+        >
+          <div
+            className="
+      px-4 sm:px-6 lg:px-8
+      py-3 sm:py-4
+      flex items-center justify-between
+    "
+          >
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.45, ease: "easeOut" }}
-              className="flex items-center gap-3"
+              className="flex items-center gap-2 sm:gap-3"
             >
               <div
                 className="
-      flex h-11 w-11 items-center justify-center
-      rounded-2xl
-      border border-black/10 dark:border-white/10
-      bg-black text-white
-      dark:bg-white dark:text-black
-      backdrop-blur-xl
-      shadow-[0_8px_30px_rgba(0,0,0,0.12)]
-      dark:shadow-[0_8px_30px_rgba(255,255,255,0.08)]
-      transition-all duration-300
-      hover:scale-105
-    "
+          flex h-9 w-9 sm:h-11 sm:w-11
+          items-center justify-center
+          rounded-xl sm:rounded-2xl
+          border border-black/10 dark:border-white/10
+          bg-black text-white
+          dark:bg-white dark:text-black
+          backdrop-blur-xl
+          shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+          dark:shadow-[0_8px_30px_rgba(255,255,255,0.08)]
+          transition-all duration-300
+          hover:scale-105
+        "
               >
-                <DollarSign className="w-5 h-5" />
+                <DollarSign className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
 
               <div className="flex flex-col leading-tight">
-                <span className="text-2xl font-bold tracking-tight text-black dark:text-white">
+                <span
+                  className="
+            text-lg sm:text-xl lg:text-2xl
+            font-bold tracking-tight
+            text-black dark:text-white
+          "
+                >
                   FinSight
                 </span>
-                <span className="text-xs text-gray-500 dark:text-gray-400 font-medium tracking-[0.2em] uppercase">
+
+                <span
+                  className="
+            hidden sm:block
+            text-[10px] sm:text-xs
+            text-gray-500 dark:text-gray-400
+            font-medium
+            tracking-[0.2em]
+            uppercase
+          "
+                >
                   Finance Intelligence
                 </span>
               </div>
             </motion.div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <button
                 onClick={() =>
                   setTheme(resolvedTheme === "light" ? "dark" : "light")
                 }
                 className="
-      group relative
-      h-10 w-10
-      rounded-2xl
-      border border-black/10 dark:border-white/10
-      bg-white/70 dark:bg-white/[0.05]
-      backdrop-blur-2xl
-      shadow-[0_8px_30px_rgba(0,0,0,0.08)]
-      dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)]
-      hover:scale-105
-      hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]
-      dark:hover:shadow-[0_12px_40px_rgba(255,255,255,0.08)]
-      active:scale-95
-      transition-all duration-300
-      flex items-center justify-center
-      overflow-hidden
-    "
+          group relative
+          h-9 w-9 sm:h-10 sm:w-10
+          rounded-xl sm:rounded-2xl
+          border border-black/10 dark:border-white/10
+          bg-white/70 dark:bg-white/[0.05]
+          backdrop-blur-2xl
+          shadow-[0_8px_30px_rgba(0,0,0,0.08)]
+          dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)]
+          hover:scale-105
+          active:scale-95
+          transition-all duration-300
+          flex items-center justify-center
+          overflow-hidden
+        "
                 aria-label="Toggle theme"
               >
                 <div
                   className="
-        absolute inset-0
-        bg-gradient-to-r
-        from-transparent
-        via-white/20
-        dark:via-white/10
-        to-transparent
-        -translate-x-full
-        group-hover:translate-x-full
-        transition-transform duration-1000
-      "
+            absolute inset-0
+            bg-gradient-to-r
+            from-transparent
+            via-white/20
+            dark:via-white/10
+            to-transparent
+            -translate-x-full
+            group-hover:translate-x-full
+            transition-transform duration-1000
+          "
                 />
 
                 <div className="relative z-10 transition-transform duration-300 group-hover:rotate-12">
                   {resolvedTheme === "light" ? (
                     <Moon className="w-4 h-4 text-slate-700" />
                   ) : (
-                    <Sun className="w-4 h-4 text-yellow-400 drop-shadow-md" />
+                    <Sun className="w-4 h-4 text-yellow-400" />
                   )}
                 </div>
               </button>
@@ -254,70 +283,82 @@ export function LandingPage() {
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="
-    group relative overflow-hidden
-    flex items-center gap-2
-    px-5 py-3
-    rounded-2xl
-    border border-black/10 dark:border-white/10
-    bg-white text-black
-    dark:bg-white/10 dark:text-white
-    backdrop-blur-2xl
-    shadow-[0_10px_30px_rgba(0,0,0,0.08)]
-    dark:shadow-[0_10px_30px_rgba(255,255,255,0.05)]
-    hover:scale-105
-    hover:shadow-[0_14px_40px_rgba(0,0,0,0.12)]
-    dark:hover:shadow-[0_14px_40px_rgba(255,255,255,0.08)]
-    active:scale-95
-    transition-all duration-300
-  "
+          group relative overflow-hidden
+          flex items-center gap-2
+          px-3 sm:px-5
+          py-2 sm:py-3
+          rounded-xl sm:rounded-2xl
+          border border-black/10 dark:border-white/10
+          bg-white text-black
+          dark:bg-white/10 dark:text-white
+          backdrop-blur-2xl
+          shadow-[0_10px_30px_rgba(0,0,0,0.08)]
+          dark:shadow-[0_10px_30px_rgba(255,255,255,0.05)]
+          hover:scale-105
+          active:scale-95
+          transition-all duration-300
+        "
                 aria-label="Open login"
               >
-                {/* Shine effect */}
                 <div
                   className="
-      absolute inset-0
-      bg-gradient-to-r
-      from-transparent
-      via-black/5
-      dark:via-white/10
-      to-transparent
-      -translate-x-full
-      group-hover:translate-x-full
-      transition-transform duration-1000
-    "
+            absolute inset-0
+            bg-gradient-to-r
+            from-transparent
+            via-black/5
+            dark:via-white/10
+            to-transparent
+            -translate-x-full
+            group-hover:translate-x-full
+            transition-transform duration-1000
+          "
                 />
 
-                <LogIn className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-                <span className="relative z-10 font-medium tracking-wide">
+                <LogIn className="relative z-10 w-4 h-4" />
+
+                <span
+                  className="
+            relative z-10
+            text-sm sm:text-base
+            font-medium tracking-wide
+          "
+                >
                   Login
                 </span>
               </button>
             </div>
           </div>
         </nav>
-        <section className="max-w-7xl mx-auto px-6 pt-50 py-12">
+        <section
+          className="
+    max-w-7xl mx-auto
+    px-4 sm:px-6 lg:px-6
+    pt-48 sm:pt-32 lg:pt-56
+    pb-12 sm:pb-16 lg:pb-20
+  "
+        >
           <div className="flex flex-col items-center text-center">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="
-        text-5xl lg:text-7xl
-        font-bold
-        leading-[1.05]
-        tracking-tight
         max-w-7xl
+        text-4xl sm:text-5xl lg:text-7xl
+        font-bold
+        leading-tight sm:leading-[1.05]
+        tracking-tight
       "
             >
               <TextGenerateEffect
                 words="Take Control of Your Financial Future"
                 className="
-            text-5xl lg:text-7xl
-            font-bold
-            leading-[1.05]
-            tracking-tight
-            text-black dark:text-white
-          "
+          text-4xl sm:text-5xl lg:text-7xl
+          font-bold
+          leading-tight sm:leading-[1.05]
+          tracking-tight
+          text-black dark:text-white
+        "
               />
             </motion.h1>
 
@@ -326,25 +367,29 @@ export function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               className="
-        text-xl
-        text-gray-600 dark:text-gray-400
-        mt-6
+        mt-5 sm:mt-6
+        max-w-3xl
+        px-2 sm:px-0
+        text-sm sm:text-lg lg:text-xl
         leading-relaxed
-        max-w-6xl
+        text-gray-600 dark:text-gray-400
       "
             >
               Smart budgeting, intelligent insights, real-time expense tracking,
               and AI-powered savings recommendations — all in one premium
               finance platform.
             </motion.p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
+
+            <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-2 sm:gap-3">
               {["Track", "Analyze", "Save", "Invest"].map((text) => (
                 <span
                   key={text}
                   className="
-            px-4 py-2
+            px-3 sm:px-4
+            py-1.5 sm:py-2
             rounded-full
-            text-sm font-medium
+            text-xs sm:text-sm
+            font-medium
             border border-black/10 dark:border-white/10
             bg-white/70 dark:bg-white/5
             backdrop-blur-xl
@@ -391,22 +436,49 @@ export function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="relative py-28 overflow-hidden" ref={featuresRef}>
+        <section
+          className="relative py-16 sm:py-20 lg:py-28 overflow-hidden"
+          ref={featuresRef}
+        >
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-10 left-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
-            <div className="absolute bottom-10 right-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+            <div className="absolute top-10 left-1/4 h-40 w-40 sm:h-56 sm:w-56 lg:h-72 lg:w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+            <div className="absolute bottom-10 right-1/4 h-40 w-40 sm:h-56 sm:w-56 lg:h-72 lg:w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
           </div>
-          <div className="relative max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400 mb-4">
+
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 sm:mb-14 lg:mb-16">
+              <p
+                className="
+          text-xs sm:text-sm
+          uppercase
+          tracking-[0.2em] sm:tracking-[0.3em]
+          text-gray-500 dark:text-gray-400
+          mb-3 sm:mb-4
+        "
+              >
                 Premium Features
               </p>
 
-              <h2 className="text-4xl lg:text-5xl font-bold tracking-tight">
+              <h2
+                className="
+          text-2xl sm:text-4xl lg:text-5xl
+          font-bold
+          tracking-tight
+        "
+              >
                 Powerful Finance Experience
               </h2>
 
-              <p className="text-lg text-gray-600 dark:text-gray-400 mt-5 max-w-6xl mx-auto leading-relaxed">
+              <p
+                className="
+          text-sm sm:text-base lg:text-lg
+          text-gray-600 dark:text-gray-400
+          mt-4 sm:mt-5
+          max-w-3xl
+          mx-auto
+          leading-relaxed
+        "
+              >
                 Everything you need to track expenses, monitor investments,
                 optimize budgets, and unlock intelligent financial insights in
                 one beautifully designed platform.
@@ -421,19 +493,21 @@ export function LandingPage() {
                   duration: 55,
                   ease: "linear",
                 }}
-                className="flex gap-6 w-max"
+                className="flex gap-4 sm:gap-6 w-max"
               >
                 {[...features, ...features].map((feature, index) => (
                   <motion.div
                     key={index}
                     whileHover={{ y: -8, scale: 1.02 }}
                     className="
-              min-w-[320px]
-              rounded-3xl
+              min-w-[240px]
+              sm:min-w-[280px]
+              lg:min-w-[320px]
+              rounded-2xl sm:rounded-3xl
               border border-black/10 dark:border-white/10
               bg-white/80 dark:bg-white/[0.03]
               backdrop-blur-2xl
-              p-7
+              p-5 sm:p-6 lg:p-7
               shadow-[0_10px_40px_rgba(0,0,0,0.06)]
               dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
               transition-all duration-300
@@ -441,29 +515,35 @@ export function LandingPage() {
                   >
                     <div
                       className="
-                w-14 h-14
-                rounded-2xl
+                w-12 h-12 sm:w-14 sm:h-14
+                rounded-xl sm:rounded-2xl
                 flex items-center justify-center
                 border border-black/10 dark:border-white/10
                 bg-black text-white
                 dark:bg-white dark:text-black
                 shadow-lg
-                mb-5
+                mb-4 sm:mb-5
               "
                     >
                       {feature.icon}
                     </div>
 
-                    <h3 className="text-xl font-semibold mb-3">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">
                       {feature.title}
                     </h3>
 
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    <p
+                      className="
+                text-sm sm:text-base
+                text-gray-600 dark:text-gray-400
+                leading-relaxed
+              "
+                    >
                       {feature.description}
                     </p>
 
-                    <div className="mt-6 flex items-center justify-between">
-                      <span className="text-sm text-gray-500 dark:text-gray-500">
+                    <div className="mt-5 sm:mt-6 flex items-center justify-between">
+                      <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-500">
                         Real-time powered
                       </span>
 
@@ -475,29 +555,52 @@ export function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="relative py-12 overflow-hidden">
+        <section className="relative py-10 sm:py-12 lg:py-16 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute left-1/4 top-10 h-60 w-60 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
-            <div className="absolute right-1/4 bottom-10 h-60 w-60 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+            <div className="absolute left-1/4 top-10 h-32 w-32 sm:h-48 sm:w-48 lg:h-60 lg:w-60 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+            <div className="absolute right-1/4 bottom-10 h-32 w-32 sm:h-48 sm:w-48 lg:h-60 lg:w-60 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
           </div>
 
-          <div className="relative max-w-7xl mx-auto px-6">
-            <div className="text-center mb-14">
-              <p className="text-sm uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400 mb-4">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 sm:mb-14">
+              <p
+                className="
+          text-xs sm:text-sm
+          uppercase
+          tracking-[0.2em] sm:tracking-[0.3em]
+          text-gray-500 dark:text-gray-400
+          mb-3 sm:mb-4
+        "
+              >
                 Performance Metrics
               </p>
 
-              <h2 className="text-4xl lg:text-5xl font-bold tracking-tight">
+              <h2
+                className="
+          text-2xl sm:text-4xl lg:text-5xl
+          font-bold
+          tracking-tight
+        "
+              >
                 Trusted by Thousands
               </h2>
 
-              <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-6xl mx-auto">
+              <p
+                className="
+          mt-3 sm:mt-4
+          text-sm sm:text-base lg:text-lg
+          text-gray-600 dark:text-gray-400
+          max-w-3xl
+          mx-auto
+          leading-relaxed
+        "
+              >
                 Our platform continues to deliver reliable performance,
                 security, and real-time insights for users worldwide.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {stats.map((stat, idx) => (
                 <motion.div
                   key={idx}
@@ -509,33 +612,41 @@ export function LandingPage() {
                   }}
                   whileHover={{ y: -8, scale: 1.02 }}
                   className="
-                rounded-3xl
-                border border-black/10 dark:border-white/10
-                bg-white/80 dark:bg-white/[0.03]
-                backdrop-blur-2xl
-                p-8
-                text-center
-                shadow-[0_10px_40px_rgba(0,0,0,0.06)]
-                dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
-                transition-all duration-300
-              "
+            rounded-2xl sm:rounded-3xl
+            border border-black/10 dark:border-white/10
+            bg-white/80 dark:bg-white/[0.03]
+            backdrop-blur-2xl
+            p-5 sm:p-6 lg:p-8
+            text-center
+            shadow-[0_10px_40px_rgba(0,0,0,0.06)]
+            dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
+            transition-all duration-300
+          "
                 >
                   <div
                     className="
-                  mx-auto mb-5
-                  flex h-16 w-16 items-center justify-center
-                  rounded-2xl
-                  border border-black/10 dark:border-white/10
-                  bg-black text-white
-                  dark:bg-white dark:text-black
-                  text-2xl
-                  shadow-lg
-                "
+              mx-auto mb-4 sm:mb-5
+              flex h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16
+              items-center justify-center
+              rounded-xl sm:rounded-2xl
+              border border-black/10 dark:border-white/10
+              bg-black text-white
+              dark:bg-white dark:text-black
+              text-xl sm:text-2xl
+              shadow-lg
+            "
                   >
                     {stat.icon}
                   </div>
 
-                  <h3 className="text-5xl font-bold tracking-tight mb-3">
+                  <h3
+                    className="
+              text-3xl sm:text-4xl lg:text-5xl
+              font-bold
+              tracking-tight
+              mb-2 sm:mb-3
+            "
+                  >
                     <CountUp
                       end={stat.value}
                       duration={1800}
@@ -543,12 +654,18 @@ export function LandingPage() {
                     />
                   </h3>
 
-                  <p className="text-gray-600 dark:text-gray-400 text-lg font-medium">
+                  <p
+                    className="
+              text-sm sm:text-base lg:text-lg
+              font-medium
+              text-gray-600 dark:text-gray-400
+            "
+                  >
                     {stat.label}
                   </p>
 
-                  <div className="mt-6 pt-4 border-t border-black/5 dark:border-white/5">
-                    <p className="text-sm text-gray-500 dark:text-gray-500">
+                  <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-black/5 dark:border-white/5">
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500">
                       Updated in real-time
                     </p>
                   </div>
@@ -557,10 +674,11 @@ export function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="relative py-12 overflow-hidden">
+        <section className="relative py-10 sm:py-12 lg:py-16 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-10 left-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
-            <div className="absolute bottom-10 right-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+            <div className="absolute top-10 left-1/4 h-32 w-32 sm:h-56 sm:w-56 lg:h-72 lg:w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+            <div className="absolute bottom-10 right-1/4 h-32 w-32 sm:h-56 sm:w-56 lg:h-72 lg:w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+
             <div
               className="absolute inset-0 opacity-20"
               style={{
@@ -573,7 +691,16 @@ export function LandingPage() {
             />
           </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
+          <div
+            className="
+      relative z-10
+      max-w-7xl mx-auto
+      px-4 sm:px-6 lg:px-8
+      grid grid-cols-1 lg:grid-cols-2
+      gap-8 sm:gap-10 lg:gap-16
+      items-start
+    "
+          >
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -582,45 +709,72 @@ export function LandingPage() {
             >
               <div
                 className="
-          w-16 h-16 rounded-3xl
+          w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16
+          rounded-2xl sm:rounded-3xl
           bg-white/70 dark:bg-white/5
           border border-black/10 dark:border-white/10
           backdrop-blur-2xl
           flex items-center justify-center
           shadow-xl
-          mb-8
+          mb-6 sm:mb-8
         "
               >
-                <DollarSign className="w-6 h-6 text-black dark:text-white" />
+                <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white" />
               </div>
 
-              <p className="text-sm uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400 mb-4">
+              <p className="text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-500 dark:text-gray-400 mb-3 sm:mb-4">
                 Contact
               </p>
 
-              <h2 className="text-5xl lg:text-6xl font-bold tracking-tight text-black dark:text-white mb-6">
+              <h2
+                className="
+          text-3xl sm:text-4xl lg:text-6xl
+          font-bold
+          tracking-tight
+          text-black dark:text-white
+          mb-4 sm:mb-6
+        "
+              >
                 Let’s talk
               </h2>
 
-              <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-lg">
+              <p
+                className="
+          text-sm sm:text-base lg:text-lg
+          text-gray-600 dark:text-gray-400
+          leading-relaxed
+          max-w-lg
+        "
+              >
                 We’re always looking for ways to improve the platform and help
                 users achieve smarter financial freedom. Reach out anytime.
               </p>
 
-              <div className="mt-10 flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
-                <span>support@finsight.ai</span>
-                <span>•</span>
-                <span>+91 98765 43210</span>
-                <span>•</span>
-                <span>Pune, India</span>
-              </div>
               <div
                 className="
-          mt-16 rounded-3xl
+          mt-6 sm:mt-10
+          flex flex-col sm:flex-row
+          flex-wrap
+          gap-2 sm:gap-4
+          text-sm
+          text-gray-600 dark:text-gray-400
+        "
+              >
+                <span>support@finsight.ai</span>
+                <span className="hidden sm:block">•</span>
+                <span>+91 98765 43210</span>
+                <span className="hidden sm:block">•</span>
+                <span>Pune, India</span>
+              </div>
+
+              <div
+                className="
+          mt-8 sm:mt-12 lg:mt-16
+          rounded-2xl sm:rounded-3xl
           border border-black/10 dark:border-white/10
           bg-white/70 dark:bg-white/[0.03]
           backdrop-blur-2xl
-          p-8
+          p-5 sm:p-6 lg:p-8
           shadow-[0_10px_40px_rgba(0,0,0,0.06)]
           dark:shadow-[0_10px_40px_rgba(255,255,255,0.04)]
         "
@@ -629,11 +783,11 @@ export function LandingPage() {
                   Our office
                 </p>
 
-                <h4 className="text-2xl font-semibold text-black dark:text-white">
-                  Bangalore , India
+                <h4 className="text-xl sm:text-2xl font-semibold text-black dark:text-white">
+                  Bangalore, India
                 </h4>
 
-                <p className="text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">
                   Serving users globally with secure finance tools.
                 </p>
               </div>
@@ -645,16 +799,16 @@ export function LandingPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="
-        rounded-[32px]
+        rounded-3xl
         border border-black/10 dark:border-white/10
         bg-white/80 dark:bg-white/[0.03]
         backdrop-blur-2xl
-        p-8
+        p-5 sm:p-6 lg:p-8
         shadow-[0_20px_60px_rgba(0,0,0,0.08)]
         dark:shadow-[0_20px_60px_rgba(255,255,255,0.04)]
       "
             >
-              <div className="space-y-6">
+              <div className="space-y-5 sm:space-y-6">
                 {[
                   { label: "Full name", key: "fullName", type: "text" },
                   { label: "Email Address", key: "email", type: "email" },
@@ -750,40 +904,42 @@ export function LandingPage() {
           <h1
             className="
       absolute bottom-0 left-1/2
-      -translate-x-1/3 -translate-y-10 py-4
-      text-[7rem] md:text-[14rem]
+      -translate-x-1/2 translate-y-2 sm:translate-y-6 lg:translate-y-10
+      text-[3rem] sm:text-[5rem] md:text-[8rem] lg:text-[12rem]
       font-extrabold tracking-tight
       text-black/[0.04] dark:text-white/[0.04]
       select-none z-0
       pointer-events-none
+      whitespace-nowrap
     "
           >
             FinSight
           </h1>
 
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute left-1/4 top-10 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
-            <div className="absolute right-1/4 bottom-10 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+            <div className="absolute left-1/4 top-10 h-32 w-32 sm:h-56 sm:w-56 lg:h-72 lg:w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
+            <div className="absolute right-1/4 bottom-10 h-32 w-32 sm:h-56 sm:w-56 lg:h-72 lg:w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
           </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
             <div
               className="
-        mb-16 rounded-[32px]
+        mb-10 sm:mb-14 lg:mb-16
+        rounded-3xl
         border border-black/10 dark:border-white/10
         bg-white/80 dark:bg-white/[0.03]
         backdrop-blur-2xl
-        p-8
+        p-5 sm:p-6 lg:p-8
         shadow-[0_20px_60px_rgba(0,0,0,0.06)]
         dark:shadow-[0_20px_60px_rgba(255,255,255,0.04)]
       "
             >
-              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 sm:gap-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-black dark:text-white">
+                  <h3 className="text-xl sm:text-2xl font-bold text-black dark:text-white">
                     Ready to take control of your finances?
                   </h3>
-                  <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  <p className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">
                     Smart budgeting, expense tracking, and AI-powered financial
                     insights.
                   </p>
@@ -792,7 +948,10 @@ export function LandingPage() {
                 <button
                   onClick={() => setIsModalOpen(true)}
                   className="
-            px-6 py-3 rounded-2xl
+            px-4 sm:px-6
+            py-2 sm:py-3
+            text-sm sm:text-base
+            rounded-xl sm:rounded-2xl
             bg-black text-white
             dark:bg-white dark:text-black
             font-semibold
@@ -806,9 +965,9 @@ export function LandingPage() {
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10">
-              <div className="space-y-5">
-                <h2 className="text-3xl font-bold tracking-tight text-black dark:text-white">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+              <div className="space-y-4 sm:space-y-5">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-black dark:text-white">
                   FinSight
                 </h2>
 
@@ -820,11 +979,11 @@ export function LandingPage() {
               </div>
 
               <div>
-                <h3 className="font-semibold mb-4 text-black dark:text-white">
+                <h3 className="font-semibold mb-3 sm:mb-4 text-black dark:text-white">
                   Platform
                 </h3>
 
-                <ul className="space-y-3 text-gray-600 dark:text-gray-400 text-sm">
+                <ul className="space-y-2 sm:space-y-3 text-gray-600 dark:text-gray-400 text-sm">
                   <li>Dashboard</li>
                   <li>Expense Tracking</li>
                   <li>Budget Planner</li>
@@ -834,11 +993,11 @@ export function LandingPage() {
               </div>
 
               <div>
-                <h3 className="font-semibold mb-4 text-black dark:text-white">
+                <h3 className="font-semibold mb-3 sm:mb-4 text-black dark:text-white">
                   Resources
                 </h3>
 
-                <ul className="space-y-3 text-gray-600 dark:text-gray-400 text-sm">
+                <ul className="space-y-2 sm:space-y-3 text-gray-600 dark:text-gray-400 text-sm">
                   <li>Financial Blog</li>
                   <li>Security Center</li>
                   <li>Reports</li>
@@ -847,11 +1006,11 @@ export function LandingPage() {
               </div>
 
               <div>
-                <h3 className="font-semibold mb-4 text-black dark:text-white">
+                <h3 className="font-semibold mb-3 sm:mb-4 text-black dark:text-white">
                   Company
                 </h3>
 
-                <ul className="space-y-3 text-gray-600 dark:text-gray-400 text-sm">
+                <ul className="space-y-2 sm:space-y-3 text-gray-600 dark:text-gray-400 text-sm">
                   <li>About</li>
                   <li>Careers</li>
                   <li>Contact</li>
@@ -860,18 +1019,20 @@ export function LandingPage() {
               </div>
             </div>
 
-            <div className="my-12 border-t border-black/10 dark:border-white/10 py-6" />
-            <div className="flex flex-col md:flex-row justify-between items-center gap-2 mt-40">
+            <div className="my-8 sm:my-10 lg:my-12 border-t border-black/10 dark:border-white/10 pt-6" />
+
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 mt-8 sm:mt-12">
               <p className="text-sm text-gray-500 dark:text-gray-400 text-center md:text-left">
                 © {new Date().getFullYear()} FinSight. All rights reserved.
               </p>
 
-              <div className="flex space-x-4">
+              <div className="flex space-x-3 sm:space-x-4">
                 {[LinkedinIcon, TwitterIcon, YoutubeIcon].map((Icon, idx) => (
                   <div
                     key={idx}
                     className="
-              p-3 rounded-full
+              p-2 sm:p-3
+              rounded-full
               border border-black/10 dark:border-white/10
               bg-white/70 dark:bg-white/[0.03]
               backdrop-blur-xl
@@ -880,7 +1041,7 @@ export function LandingPage() {
               cursor-pointer
             "
                   >
-                    <Icon className="w-5 h-5 text-black dark:text-white" />
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-black dark:text-white" />
                   </div>
                 ))}
               </div>
