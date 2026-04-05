@@ -88,7 +88,6 @@ export function LoginForm({ onClose }: LoginFormProps) {
         dark:shadow-[0_20px_60px_rgba(255,255,255,0.06)]
       "
     >
-      {/* Close Button */}
       <button
         onClick={onClose}
         className="
@@ -102,16 +101,14 @@ export function LoginForm({ onClose }: LoginFormProps) {
         <X size={20} />
       </button>
 
-      {/* Left Image */}
       <div
         className="flex-1 bg-cover bg-center hidden md:block"
         style={{ backgroundImage: "url(/login.jpg)" }}
       />
 
-      {/* Right Form */}
       <div className="flex-1 p-8 flex items-center justify-center">
         <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6">
-          {/* Header */}
+      
           <div className="text-center space-y-2">
             <h2 className="text-4xl font-bold text-black dark:text-white">
               Sign in
@@ -121,21 +118,19 @@ export function LoginForm({ onClose }: LoginFormProps) {
             </p>
           </div>
 
-          {/* Error */}
           {error && (
             <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400">
               {error}
             </div>
           )}
 
-          {/* Email */}
           <div>
             <label className="mb-2 block text-sm text-gray-600 dark:text-gray-300">
               Email address
             </label>
 
             <div className="relative">
-              <Mail className="absolute left-4 top-4 h-5 w-5 text-gray-400" />
+              <Mail className="absolute left-4 top-4 h-5 w-5 text-gray-800 dark:text-gray-300" />
 
               <input
                 type="email"
@@ -157,15 +152,13 @@ export function LoginForm({ onClose }: LoginFormProps) {
               />
             </div>
           </div>
-
-          {/* Password */}
           <div>
             <label className="mb-2 block text-sm text-gray-600 dark:text-gray-300">
               Password
             </label>
 
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-800 dark:text-gray-300" />
 
               <input
                 type={showPassword ? "text" : "password"}
@@ -206,7 +199,6 @@ export function LoginForm({ onClose }: LoginFormProps) {
             </div>
           </div>
 
-          {/* Role Selector */}
           <div>
             <label className="mb-3 block text-sm font-medium text-gray-600 dark:text-gray-300">
               Select Role
@@ -242,7 +234,6 @@ export function LoginForm({ onClose }: LoginFormProps) {
             </p>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={isLoading}

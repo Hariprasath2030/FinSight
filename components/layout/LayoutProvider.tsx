@@ -25,26 +25,44 @@ export function LayoutProvider({ children }: { children: React.ReactNode }) {
         <>
           <FinSightNavbar />
 
-          <main className="flex-1 mx-20 py-10 mt-20">{children}</main>
+          <main
+            className="
+              flex-1
+              w-full
+              px-6
+              sm:px-6
+              md:px-8
+              lg:px-12
+              xl:px-20
+              py-6
+              sm:py-8
+              md:py-10
+              mt-20
+              sm:mt-24
+            "
+          >
+            {children}
+          </main>
 
           <footer
             className="
-    border-t border-black/5 dark:border-white/10
-    bg-white/60 dark:bg-white/[0.03]
-    backdrop-blur-2xl
-    py-5
-    text-center
-    text-sm
-    font-medium
-    tracking-wide
-    text-gray-500 dark:text-gray-400
-  "
+              border-t border-black/5 dark:border-white/10
+              bg-white/60 dark:bg-white/[0.03]
+              backdrop-blur-2xl
+              py-4 sm:py-5
+              px-4
+              text-center
+              text-xs sm:text-sm
+              font-medium
+              tracking-wide
+              text-gray-500 dark:text-gray-400
+            "
           >
             © 2026 FinSight. All rights reserved.
           </footer>
         </>
       ) : (
-        <main className="p-0 flex-1">{children}</main>
+        <main className="flex-1 w-full">{children}</main>
       )}
     </div>
   );

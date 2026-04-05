@@ -51,7 +51,18 @@ export function Toast() {
   };
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+    <div
+      className="
+      fixed
+      bottom-4 sm:bottom-6
+      left-1/2 -translate-x-1/2
+      z-50
+      pointer-events-none
+      w-full
+      px-4 sm:px-0
+      flex justify-center
+    "
+    >
       <AnimatePresence>
         {toasts.map((toast, index) => (
           <motion.div
@@ -59,30 +70,53 @@ export function Toast() {
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{
               opacity: 1,
-              y: -(index * 80),
+              y: -(index * 72),
               scale: 1,
             }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="pointer-events-auto mb-3"
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+            }}
+            className="pointer-events-auto mb-3 w-full max-w-sm sm:max-w-md"
           >
             <div
               className={`
-                px-6 py-4 rounded-2xl backdrop-blur-xl
-                bg-white/80 dark:bg-black/60
-                shadow-xl dark:shadow-2xl
-                flex items-center gap-4
-                max-w-md
-                ${getBackgroundStyle(toast.type)}
-              `}
+              w-full
+              px-4 sm:px-6
+              py-3 sm:py-4
+              rounded-2xl
+              backdrop-blur-xl
+              bg-white/80 dark:bg-black/60
+              shadow-xl dark:shadow-2xl
+              flex items-center gap-3 sm:gap-4
+              ${getBackgroundStyle(toast.type)}
+            `}
             >
               <div className="flex-shrink-0">{getIcon(toast.type)}</div>
-              <p className="flex-1 text-sm font-medium text-gray-800 dark:text-gray-100">
+
+              <p
+                className="
+                flex-1
+                text-xs sm:text-sm
+                font-medium
+                text-gray-800 dark:text-gray-100
+                break-words
+              "
+              >
                 {toast.message}
               </p>
+
               <button
                 onClick={() => removeToast(toast.id)}
-                className="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                className="
+                flex-shrink-0
+                text-gray-400
+                hover:text-gray-600
+                dark:hover:text-gray-300
+                transition-colors
+              "
               >
                 <X className="w-4 h-4" />
               </button>

@@ -118,12 +118,13 @@ export function InsightsModule() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
+    
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
           Insights & Observations
         </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
+        <p className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">
           Smart financial insights based on your transactions
         </p>
       </div>
@@ -131,13 +132,13 @@ export function InsightsModule() {
       {loading ? (
         <InsightsSkeleton />
       ) : insights.length === 0 ? (
-        <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-gray-900">
-          <p className="text-gray-600 dark:text-gray-400">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 sm:p-12 text-center dark:border-gray-800 dark:bg-gray-900">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
             Add some transactions to see personalized insights!
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
           {insights.map((insight, index) => (
             <motion.div
               key={index}
@@ -145,30 +146,45 @@ export function InsightsModule() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{
-                scale: 1.03,
+                scale: window.innerWidth > 768 ? 1.03 : 1,
                 boxShadow: "0 12px 25px rgba(0,0,0,0.15)",
               }}
-              className={`rounded-xl border-2 p-6 ${colorVariants[insight.color]} transition-all duration-300`}
+              className={`
+              rounded-xl border-2
+              p-4 sm:p-6
+              ${colorVariants[insight.color]}
+              transition-all duration-300
+            `}
             >
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <motion.div
                   initial={{ scale: 0.9 }}
                   animate={{ scale: 1 }}
-                  className={`rounded-lg p-3 flex items-center justify-center ${colorVariants[insight.color]}`}
+                  className={`
+                  rounded-lg
+                  p-2 sm:p-3
+                  flex items-center justify-center
+                  ${colorVariants[insight.color]}
+                `}
                 >
-                  <div className={iconVariants[insight.color]}>
+                  <div
+                    className={`${iconVariants[insight.color]} scale-90 sm:scale-100`}
+                  >
                     {insight.icon}
                   </div>
                 </motion.div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900 dark:text-white">
+
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
                     {insight.title}
                   </h3>
-                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+
+                  <p className="mt-1 text-xs sm:text-sm leading-6 text-gray-600 dark:text-gray-400 break-words">
                     {insight.description}
                   </p>
+
                   {insight.progress !== undefined && (
-                    <div className="mt-3 w-full bg-gray-200 h-2 rounded-full dark:bg-gray-700">
+                    <div className="mt-3 w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{
@@ -184,21 +200,13 @@ export function InsightsModule() {
                                 ? "bg-amber-600 dark:bg-amber-400"
                                 : "bg-purple-600 dark:bg-purple-400"
                         }`}
-                      ></motion.div>
+                      />
                     </div>
                   )}
                 </div>
               </div>
             </motion.div>
           ))}
-
-          {insights.length === 0 && (
-            <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-gray-900">
-              <p className="text-gray-600 dark:text-gray-400">
-                Add some transactions to see personalized insights!
-              </p>
-            </div>
-          )}
         </div>
       )}
     </div>
