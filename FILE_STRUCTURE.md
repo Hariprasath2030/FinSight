@@ -1,4 +1,4 @@
-# FinSight File Structure Guide
+﻿# FinSight File Structure Guide
 
 ## Complete File Organization
 
@@ -6,69 +6,80 @@
 c:\Users\Hariprasath\Documents\GitHub\FinSight\
 │
 ├── 📄 Project Root Files
-│   ├── package.json                 # Dependencies and scripts
-│   ├── tsconfig.json               # TypeScript configuration
-│   ├── next.config.ts              # Next.js configuration
-│   ├── eslint.config.mjs           # ESLint configuration
-│   ├── postcss.config.mjs          # PostCSS configuration
-│   ├── tailwind.config.css         # Tailwind CSS configuration
-│   ├── next-env.d.ts               # Next.js TypeScript definitions
-│   ├── README.md                   # Original README
-│   ├── AGENTS.md                   # Agent configuration
-│   ├── CLAUDE.md                   # Claude configuration
-│   ├── DOCUMENTATION.md            # Complete documentation
-│   ├── QUICKSTART.md               # Quick start guide
-│   └── PROJECT_SUMMARY.md          # This implementation summary
+│   ├── package.json                 # Dependencies and npm scripts
+│   ├── package-lock.json            # Exact dependency versions
+│   ├── tsconfig.json                # TypeScript configuration
+│   ├── next.config.ts               # Next.js configuration
+│   ├── eslint.config.mjs            # ESLint configuration
+│   ├── postcss.config.mjs           # PostCSS plugin configuration
+│   ├── tailwind.config.js           # Tailwind CSS configuration
+│   ├── next-env.d.ts                # Next.js TypeScript definitions
+│   ├── README.md                    # Primary project README
+│   ├── README_FINSIGHT.md           # FinSight-specific project overview
+│   ├── DOCUMENTATION.md             # Detailed feature documentation
+│   ├── DEVELOPMENT.md               # Developer guide and architecture notes
+│   ├── QUICKSTART.md                # Quick start guide for users
+│   ├── PROJECT_SUMMARY.md           # Implementation summary and goals
+│   ├── FILE_STRUCTURE.md            # Current file structure reference
+│   ├── IMPLEMENTATION_CHECKLIST.md  # Implementation notes and checklist
+│   ├── components.json              # Component metadata file
+│   └── node_modules/                # Installed dependencies
 │
-├── 📂 app\                          # Next.js App Router directory
-│   ├── dashboard\
-│   │   └── page.tsx               # Dashboard page component
-│   ├── transactions\
-│   │   └── page.tsx               # Transactions page component
-│   ├── analytics\
-│   │   └── page.tsx               # Analytics page component
-│   ├── insights\
-│   │   └── page.tsx               # Insights page component
-│   ├── settings\
-│   │   └── page.tsx               # Settings page component
-│   ├── layout.tsx                 # Root layout component
-│   ├── page.tsx                   # Home page (redirect)
-│   ├── globals.css                # Global styles
-│   └── favicon.ico                # Favicon
+├── 📂 app/                          # Next.js App Router directory
+│   ├── dashboard/
+│   │   └── page.tsx                 # Dashboard page component
+│   ├── transactions/
+│   │   └── page.tsx                 # Transactions page component
+│   ├── analytics/
+│   │   └── page.tsx                 # Analytics page component
+│   ├── insights/
+│   │   └── page.tsx                 # Insights page component
+│   ├── layout.tsx                   # Root layout component and ThemeProvider
+│   ├── page.tsx                     # Landing page component
+│   ├── globals.css                  # Global application styles
+│   └── favicon.ico                  # Static favicon asset
 │
-├── 📂 components\                  # React components
-│   ├── layout\
-│   │   ├── Sidebar.tsx            # Navigation sidebar
-│   │   ├── Header.tsx             # Top header with controls
-│   │   └── LayoutProvider.tsx     # Main layout wrapper
-│   ├── dashboard\
-│   │   ├── BalanceTrendChart.tsx  # Balance trend line chart
-│   │   └── SpendingCategoryChart.tsx # Category breakdown chart
-│   ├── transactions\
-│   │   ├── TransactionFilters.tsx # Search & filter controls
-│   │   ├── TransactionTable.tsx   # Transaction list table
-│   │   └── TransactionModal.tsx   # Add/Edit transaction form
-│   ├── analytics\
-│   │   └── Charts.tsx             # Income/Expense & Savings charts
-│   ├── insights\
-│   │   └── InsightsModule.tsx     # Financial insights display
-│   └── common\
-│       ├── StatCard.tsx           # Reusable stat card
-│       └── Skeleton.tsx           # Loading skeleton components
+├── 📂 components/                   # React components and shared UI
+│   ├── layout/
+│   │   ├── FinSightNavbar.tsx       # Top navigation bar and role switcher
+│   │   └── LayoutProvider.tsx       # Layout wrapper with persistence and toast support
+│   ├── dashboard/
+│   │   ├── BalanceTrendChart.tsx    # Balance trend visualization
+│   │   └── SpendingCategoryChart.tsx# Category spending breakdown chart
+│   ├── transactions/
+│   │   ├── TransactionFilters.tsx   # Transaction search/filter controls
+│   │   ├── TransactionTable.tsx     # Transaction listing and actions
+│   │   └── TransactionModal.tsx     # Add/Edit transaction modal form
+│   ├── analytics/
+│   │   └── Charts.tsx               # Income/expense and savings charts
+│   ├── insights/
+│   │   └── InsightsModule.tsx       # Financial insight cards and recommendations
+│   ├── landing/
+│   │   ├── LandingPage.tsx          # Landing page UI and feature intro
+│   │   └── LoginForm.tsx            # Login/signup simulation form
+│   ├── common/
+│   │   ├── StatCard.tsx             # Reusable summary stat card
+│   │   ├── Skeleton.tsx             # Loading skeleton components
+│   │   └── Toast.tsx                # Notification toast system
+│   ├── ui/
+│   │   └── resizable-navbar.tsx     # Responsive navbar primitives
+│   ├── ShapeGrid.css                # Decorative landing page shape styles
+│   ├── ShapeGrid.tsx                # Animated landing page background shapes
+│   └── TextGenerateEffect.tsx       # Typing/animation text effect
 │
-├── 📂 store\                        # State management
-│   └── index.ts                   # Zustand store with all actions
+├── 📂 store/                        # Zustand state management
+│   └── index.ts                     # Global app state, persistence, and actions
 │
-├── 📂 lib\                          # Utility functions
-│   └── calculations.ts            # Financial calculation utilities
+├── 📂 lib/                          # Utility and calculation helpers
+│   └── calculations.ts              # Financial calculation utilities
 │
-├── 📂 types\                        # TypeScript definitions
-│   └── index.ts                   # All type interfaces and enums
+├── 📂 types/                        # TypeScript interfaces and type definitions
+│   └── index.ts                     # Shared type definitions
 │
-├── 📂 public\
-│   └── [static assets]            # Next.js public assets
+├── 📂 public/                       # Static public assets
+│   └── [static assets]
 │
-└── 📂 node_modules\                # Installed dependencies
+└── 📂 node_modules/                 # Installed package dependencies
 ```
 
 ## 📝 File Descriptions
@@ -78,212 +89,155 @@ c:\Users\Hariprasath\Documents\GitHub\FinSight\
 | File | Purpose |
 |------|---------|
 | `package.json` | Defines dependencies and npm scripts |
+| `package-lock.json` | Records exact installed dependency versions |
 | `tsconfig.json` | TypeScript compiler configuration |
 | `next.config.ts` | Next.js build and runtime configuration |
-| `tailwind.config.css` | Tailwind CSS theme and utilities |
+| `tailwind.config.js` | Tailwind CSS theme and utilities |
 | `eslint.config.mjs` | Code linting rules |
 | `postcss.config.mjs` | PostCSS plugin configuration |
+| `next-env.d.ts` | Next.js TypeScript global definitions |
+| `README.md` | Primary project README |
+| `README_FINSIGHT.md` | FinSight-specific project overview |
+| `DOCUMENTATION.md` | Complete feature documentation |
+| `DEVELOPMENT.md` | Developer guide and architecture |
+| `QUICKSTART.md` | Quick start guide for users |
+| `PROJECT_SUMMARY.md` | Implementation summary and goals |
+| `FILE_STRUCTURE.md` | Current file structure reference |
+| `IMPLEMENTATION_CHECKLIST.md` | Project implementation checklist |
+| `components.json` | Metadata file for component inventory |
 
 ### App Directory (Next.js Routes)
 
 | File | Route | Purpose |
 |------|-------|---------|
-| `app/page.tsx` | `/` | Home page (redirects to /dashboard) |
-| `app/dashboard/page.tsx` | `/dashboard` | Dashboard overview |
-| `app/transactions/page.tsx` | `/transactions` | Transaction management |
-| `app/analytics/page.tsx` | `/analytics` | Financial analytics |
-| `app/insights/page.tsx` | `/insights` | Financial insights |
-| `app/settings/page.tsx` | `/settings` | Settings & preferences |
-| `app/layout.tsx` | (root) | Root layout wrapper |
-| `app/globals.css` | (global) | Global styles |
+| `app/page.tsx` | `/` | Landing page and app entrypoint |
+| `app/dashboard/page.tsx` | `/dashboard` | Dashboard overview page |
+| `app/transactions/page.tsx` | `/transactions` | Transaction management page |
+| `app/analytics/page.tsx` | `/analytics` | Financial analytics page |
+| `app/insights/page.tsx` | `/insights` | Insights and recommendations page |
+| `app/layout.tsx` | Root layout | App layout wrapper, theme provider, and page scaffold |
+| `app/globals.css` | Global styles | Application global CSS styles |
+| `app/favicon.ico` | Favicon | Website favicon asset |
 
 ### Components
 
 #### Layout Components (`components/layout/`)
 
-**Sidebar.tsx**
-- Navigation menu with links to all pages
-- Active page highlighting
-- Logo and branding
-- Footer with copyright
-
-**Header.tsx**
-- Page title
-- Role badge (clickable to switch roles)
-- Theme toggle button (sun/moon)
-- Auto-save on changes
-
-**LayoutProvider.tsx**
-- Wraps entire app with layout
-- Manages localStorage persistence
-- Handles theme application
-- Auto-save mechanism (runs every second)
+| File | Purpose |
+|------|---------|
+| `FinSightNavbar.tsx` | Fixed top navigation bar with links, role switcher, and theme toggle |
+| `LayoutProvider.tsx` | Wraps pages, handles auto-save, and renders layout structure |
 
 #### Dashboard Components (`components/dashboard/`)
 
-**BalanceTrendChart.tsx**
-- Uses Recharts LineChart
-- Displays balance over time
-- Responsive container
-- Theme-aware colors
-- Interactive tooltips
-
-**SpendingCategoryChart.tsx**
-- Uses Recharts PieChart (donut format)
-- Shows expense breakdown by category
-- Color-coded categories
-- Legend for category reference
-- Empty state handling
+| File | Purpose |
+|------|---------|
+| `BalanceTrendChart.tsx` | Renders balance trend line chart |
+| `SpendingCategoryChart.tsx` | Renders spending breakdown chart |
 
 #### Transaction Components (`components/transactions/`)
 
-**TransactionFilters.tsx**
-- Search input (by description/category)
-- Category dropdown filter
-- Type dropdown filter (All/Income/Expense)
-- Reset filters button
-- Dynamic category list
-
-**TransactionTable.tsx**
-- Displays transactions in table format
-- Column headers
-- Pagination controls
-- Admin-only action buttons
-- Animated row entries
-- Styled based on transaction type
-
-**TransactionModal.tsx**
-- Form for adding/editing transactions
-- Date picker
-- Description input
-- Amount input
-- Category input
-- Type selector (Income/Expense)
-- Submit and cancel buttons
+| File | Purpose |
+|------|---------|
+| `TransactionFilters.tsx` | Search and filter controls for transactions |
+| `TransactionTable.tsx` | Transaction table, pagination, and admin actions |
+| `TransactionModal.tsx` | Add/Edit transaction modal form |
 
 #### Analytics Components (`components/analytics/`)
 
-**Charts.tsx**
-- IncomExpenseChart: Monthly comparison bar chart
-- SavingsRateChart: Savings rate trend line chart
-- Theme-aware styling
-- Interactive legends and tooltips
+| File | Purpose |
+|------|---------|
+| `Charts.tsx` | Income/Expense and savings rate chart components |
 
 #### Insights Components (`components/insights/`)
 
-**InsightsModule.tsx**
-- Displays financial insights as cards
-- Color-coded based on insight type
-- Icons for visual interest
-- Data-driven recommendations
-- Animated entry animations
+| File | Purpose |
+|------|---------|
+| `InsightsModule.tsx` | Displays actionable financial insights and recommendations |
+
+#### Landing Components (`components/landing/`)
+
+| File | Purpose |
+|------|---------|
+| `LandingPage.tsx` | Landing page layout and hero section |
+| `LoginForm.tsx` | Simulated login/signup form |
 
 #### Common Components (`components/common/`)
 
-**StatCard.tsx**
-- Reusable statistics card
-- Icon, title, value display
-- Optional trend indicator
-- Color variants (blue, green, red, purple)
-- Framer Motion animations
+| File | Purpose |
+|------|---------|
+| `StatCard.tsx` | Reusable statistic card with optional trend indicator |
+| `Skeleton.tsx` | Loading placeholders for cards, tables, and charts |
+| `Toast.tsx` | Toast notifications for user feedback |
 
-**Skeleton.tsx**
-- Loading placeholder for cards
-- Loading placeholder for tables
-- Loading placeholder for charts
-- Pulse animation
-- Matches card dimensions
+#### UI Helpers (`components/ui/`)
+
+| File | Purpose |
+|------|---------|
+| `resizable-navbar.tsx` | Navbar and mobile navigation primitives |
+
+#### Other Shared Components
+
+| File | Purpose |
+|------|---------|
+| `ShapeGrid.css` | Styles for animated landing background shapes |
+| `ShapeGrid.tsx` | Animated landing page shape grid |
+| `TextGenerateEffect.tsx` | Typing-style text animation effect |
 
 ### Store (`store/index.ts`)
 
 Zustand store with:
 - Transaction management (add, edit, delete)
 - Search and filter state
-- Role management
-- Theme management
+- Role and theme management
 - Pagination state
-- localStorage persistence
-- Auto-save/load functions
+- Toast notifications
+- LocalStorage persistence and auto-save
 
-**State Structure:**
-```typescript
-{
-  // Transactions
-  transactions: Transaction[]
-  
-  // Filters
-  searchQuery: string
-  selectedCategory: string | null
-  transactionType: 'all' | 'income' | 'expense'
-  
-  // User Settings
-  userRole: 'viewer' | 'admin'
-  theme: 'light' | 'dark'
-  currentPage: number
-  itemsPerPage: number
-  
-  // Actions & Methods
-  // ... action functions
-}
-```
-
-### Calculations Library (`lib/calculations.ts`)
+### Utilities (`lib/calculations.ts`)
 
 Utility functions:
-- `calculateDashboardStats()` - Calculate totals and percentages
-- `getCategorySpending()` - Break down spending by category
-- `getBalanceTrend()` - Generate trend data for charts
-- `getMonthlyComparison()` - Monthly income/expense comparison
-- `getHighestSpendingCategory()` - Find top spending category
-- `getSavingsRate()` - Calculate savings percentage
-- `filterTransactions()` - Filter with multiple criteria
-- `getUniqueCategories()` - Get list of all categories
-- `formatCurrency()` - Format numbers as currency
-- `formatDate()` - Format date strings
+- `calculateDashboardStats()` - totals, income, expense, balance
+- `getCategorySpending()` - category spending breakdown
+- `getBalanceTrend()` - historical balance data
+- `getMonthlyComparison()` - monthly income/expense comparison
+- `getHighestSpendingCategory()` - top expense category
+- `getSavingsRate()` - savings rate calculation
+- `filterTransactions()` - search and filter logic
+- `getUniqueCategories()` - category list generation
+- `formatCurrency()` - currency formatting
+- `formatDate()` - date formatting
 
 ### Types (`types/index.ts`)
 
-TypeScript interfaces:
-- `TransactionType` - 'income' | 'expense'
-- `UserRole` - 'viewer' | 'admin'
-- `Theme` - 'light' | 'dark'
-- `Transaction` - Complete transaction object
-- `DashboardStats` - Summary statistics
-- `CategorySpending` - Spending per category
-- `BalanceTrendData` - Historical balance data
-- `MonthlyComparison` - Monthly income/expense
+Shared type definitions:
+- `TransactionType` - `'income' | 'expense'`
+- `UserRole` - `'viewer' | 'admin'`
+- `Theme` - `'light' | 'dark'`
+- `Transaction` - transaction model
+- `DashboardStats` - dashboard totals and stats
+- `CategorySpending` - category spending shape
+- `BalanceTrendData` - balance chart data type
+- `MonthlyComparison` - monthly comparison data type
 
 ## 🔄 Component Hierarchy
 
 ```
 <LayoutProvider>
-  <div className="layout">
-    <Sidebar />
-    <Header />
-    <main>
-      {/* Page-specific components */}
-      
-      {/* Dashboard Page */}
-      <StatCard />
-      <BalanceTrendChart />
-      <SpendingCategoryChart />
-      
-      {/* Transactions Page */}
-      <TransactionFilters />
-      <TransactionTable />
-      <TransactionModal />
-      
-      {/* Analytics Page */}
-      <IncomExpenseChart />
-      <SavingsRateChart />
-      
-      {/* Insights Page */}
-      <InsightsModule />
-      
-      {/* Settings Page */}
-      {/* Form controls and buttons */}
-    </main>
-  </div>
+  <Toast />
+  <FinSightNavbar />
+  <main>
+    {/* Page-specific content */}
+    <StatCard />
+    <BalanceTrendChart />
+    <SpendingCategoryChart />
+    <TransactionFilters />
+    <TransactionTable />
+    <TransactionModal />
+    <IncomExpenseChart />
+    <SavingsRateChart />
+    <InsightsModule />
+  </main>
 </LayoutProvider>
 ```
 
@@ -320,45 +274,42 @@ Auto-save to localStorage
 
 ## 🎯 File Access Patterns
 
-### For Adding Features
-- Add new page: Create file in `app/[feature]/page.tsx`
-- Add component: Create in `components/[category]/NewComponent.tsx`
-- Add utilities: Add to `lib/[category].ts`
-- Add types: Update `types/index.ts`
+### Adding Features
+- Add a new page: create `app/[feature]/page.tsx`
+- Add a new component: create `components/[category]/NewComponent.tsx`
+- Add shared logic: add helper in `lib/`
+- Add types: update `types/index.ts`
 
-### For Styling
-- Global: Edit `app/globals.css`
-- Component-specific: Use inline Tailwind classes
-- Theme: Managed by `theme` state in store
+### Styling
+- Global styles: edit `app/globals.css`
+- Component styling: use Tailwind CSS classes in component files
 
-### For State
-- Use `useStore()` hook from `store/index.ts`
-- Access any state or action function
-- Changes auto-persist to localStorage
+### State
+- Use `useStore()` from `store/index.ts`
+- Access state and actions directly from the centralized store
+- Persistence is managed automatically through localStorage
 
-### For Calculations
-- Import functions from `lib/calculations.ts`
-- Use in components with `useEffect` and `useState`
-- Memoize for performance where needed
+### Calculations
+- Import from `lib/calculations.ts`
+- Use in components with standard React hooks
+- Memoize results if needed for performance
 
 ## 📈 Scalability Notes
 
 This structure is designed to:
-- Scale easily with more pages
-- Add new modules independently
-- Maintain consistent patterns
-- Keep concerns separated
-- Enable code reuse
-- Support team development
+- support independent page growth
+- keep UI concerns separated
+- enable reusable components
+- make state reuse easy
+- support new analytics and insight pages
 
 ## 🚀 Build Output
 
-When you run `npm run build`:
-- `.next/` directory is created
-- Optimized for production
-- Can be deployed to any Node.js hosting
-- Or use `npm start` for production server
+When running `npm run build`:
+- `.next/` directory is generated
+- code is optimized for production
+- app can be deployed to supported Node.js hosts
 
 ---
 
-This file structure provides a solid foundation for a modern, scalable financial dashboard application.
+This file structure guide now matches the actual current repository layout.

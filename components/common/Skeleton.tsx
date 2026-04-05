@@ -4,15 +4,38 @@ import { motion } from "framer-motion";
 
 export function SkeletonCard() {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-black">
+    <div
+      className="
+        rounded-2xl
+        border border-gray-900/40
+        bg-black
+        p-5 sm:p-6
+        shadow-sm
+      "
+    >
       <motion.div
-        animate={{ opacity: [0.5, 1, 0.5] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="space-y-3"
+        animate={{ opacity: [0.45, 1, 0.45] }}
+        transition={{
+          duration: 1.6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="flex items-center justify-between"
       >
-        <div className="h-4 w-1/3 rounded bg-gray-300 dark:bg-gray-700" />
-        <div className="h-8 w-1/2 rounded bg-gray-300 dark:bg-gray-700" />
-        <div className="h-4 w-1/4 rounded bg-gray-300 dark:bg-gray-700" />
+        <div className="space-y-4 flex-1">
+        
+          <div className="h-5 w-28 rounded-md bg-gray-900" />
+
+          <div className="h-10 w-36 rounded-md bg-gray-900" />
+        </div>
+
+        <div
+          className="
+            h-14 w-14 sm:h-16 sm:w-16
+            rounded-2xl
+            bg-gray-900
+          "
+        />
       </motion.div>
     </div>
   );

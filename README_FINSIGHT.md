@@ -1,51 +1,36 @@
-# 🎯 FinSight - Advanced Finance Dashboard
+﻿# 🎯 FinSight - Advanced Finance Dashboard
 
-> A professional-grade financial dashboard application built with Next.js 16, React 19, TypeScript, and Tailwind CSS. Features advanced analytics, role-based access, real-time charts, and intelligent financial insights—all with zero backend requirements.
+> A modern financial dashboard built with Next.js 16, React 19, TypeScript, and Tailwind CSS. It delivers analytics, transaction management, smart insights, local persistence, and export tools with no backend required.
 
-## ✨ Features at a Glance
+## ✨ Key Features
 
-✅ **Dashboard Overview** - Summary statistics and trend visualization
-✅ **Transaction Management** - Search, filter, paginate, add/edit/delete
-✅ **Advanced Analytics** - Multiple chart types for financial analysis
-✅ **Smart Insights** - Data-driven financial observations
-✅ **Role-Based Access** - Viewer and Admin role control
-✅ **Dark Mode** - Light and dark theme support
-✅ **Data Export** - JSON and CSV export formats
-✅ **Persistent Storage** - Browser localStorage integration
-✅ **Responsive Design** - Mobile, tablet, and desktop support
-✅ **Smooth Animations** - Framer Motion powered interactions
+- **Responsive Dashboard** with summary statistics and trend charts
+- **Transactions Management** with search, category filters, and pagination
+- **Role-Based Access** with Viewer and Admin modes
+- **Data Export** to JSON and CSV from the Transactions page
+- **Theme Switching** with light/dark mode and persistent preference
+- **Persistent Storage** using browser `localStorage`
+- **Interactive Visualizations** using Recharts
+- **Smooth Animations** with Framer Motion
+- **Landing Page** with login simulation and feature overview
 
 ## 🚀 Quick Start
 
 ```bash
-# 1. Install dependencies
 cd c:\Users\Hariprasath\Documents\GitHub\FinSight
-npm install --legacy-peer-deps
-
-# 2. Start development server
+npm install
 npm run dev
-
-# 3. Open in browser
-# http://localhost:3000
 ```
 
-You'll be automatically redirected to the dashboard. Start exploring!
+Open `http://localhost:3000` in your browser.
 
 ## 📚 Documentation Guide
 
-### For First-Time Users
-→ Start with **[QUICKSTART.md](QUICKSTART.md)** for a tour of all features
-
-### For Complete Information
-→ Read **[DOCUMENTATION.md](DOCUMENTATION.md)** for comprehensive feature documentation
-
-### For Developers
-→ Check **[DEVELOPMENT.md](DEVELOPMENT.md)** for architecture and extending the app
-
-→ Review **[FILE_STRUCTURE.md](FILE_STRUCTURE.md)** to understand the codebase organization
-
-### For Project Overview
-→ See **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** for implementation details and what was built
+- **First-Time Users:** start with **[QUICKSTART.md](QUICKSTART.md)** to explore the main features and workflows.
+- **Complete Documentation:** read **[DOCUMENTATION.md](DOCUMENTATION.md)** for full feature details and usage notes.
+- **Developers:** review **[DEVELOPMENT.md](DEVELOPMENT.md)** for architecture, component structure, and extension guidance.
+- **Code Organization:** inspect **[FILE_STRUCTURE.md](FILE_STRUCTURE.md)** for a detailed map of the repository and folder layout.
+- **Project Overview:** consult **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** for implementation goals, feature summaries, and project context.
 
 ## 🎨 Design & User Experience
 
@@ -96,98 +81,77 @@ You'll be automatically redirected to the dashboard. Start exploring!
 
 ```
 FinSight/
-├── app/                    # Next.js routes
+├── app/                    # Next.js routes and page entrypoints
+│   ├── analytics/         # Analytics page
 │   ├── dashboard/         # Dashboard page
-│   ├── transactions/      # Transaction management
-│   ├── analytics/         # Analytics & charts
-│   ├── insights/          # Financial insights
-│   ├── settings/          # Settings & export
-│   └── layout.tsx         # Root layout
-├── components/            # React components (organized by feature)
+│   ├── insights/          # Insights page
+│   ├── transactions/      # Transactions page
+│   ├── layout.tsx         # App layout, ThemeProvider, navbar wrapper
+│   └── page.tsx           # Landing page
+├── components/            # Reusable UI and feature components
+├── lib/                   # Calculation and utility helpers
 ├── store/                 # Zustand state management
-├── lib/                   # Utility functions
-├── types/                 # TypeScript definitions
-└── [config files]         # Build & lint config
+├── types/                 # Shared TypeScript types
+└── public/                # Static assets
 ```
-
 See **[FILE_STRUCTURE.md](FILE_STRUCTURE.md)** for detailed breakdown.
 
-## 🎯 Core Modules
 
-### 1. Dashboard Overview
-- **Location**: `/dashboard`
-- **Features**: Summary cards, balance trend, category breakdown
-- **Components**: `StatCard`, `BalanceTrendChart`, `SpendingCategoryChart`
+## 📦 Tech Stack
 
-### 2. Transactions
-- **Location**: `/transactions`
-- **Features**: Search, filter, sort, paginate, CRUD operations
-- **Components**: `TransactionFilters`, `TransactionTable`, `TransactionModal`
+- **Next.js** 16.2.2
+- **React** 19.2.4
+- **TypeScript** 5
+- **Tailwind CSS** 4
+- **Zustand** 4.4.0
+- **Recharts** 2.10.0
+- **Framer Motion** 10.16.0
+- **Lucide React** 0.441.0
+- **next-themes** 0.4.6
 
-### 3. Analytics
-- **Location**: `/analytics`
-- **Features**: Income vs Expenses, Savings Rate, Balance Trend, Category Breakdown
-- **Components**: `IncomExpenseChart`, `SavingsRateChart`, `BalanceTrendChart`, `SpendingCategoryChart`
+## 🧩 Routes & Modules
 
-### 4. Insights
-- **Location**: `/insights`
-- **Features**: Smart observations, spending analysis, savings recommendations
-- **Components**: `InsightsModule`
+### `/`
+- Landing page with feature overview and login/signup simulation
+- Theme toggle and introductory UI
 
-### 5. Settings
-- **Location**: `/settings`
-- **Features**: Theme management, role switching, data export
-- **Components**: Settings page with export functionality
+### `/dashboard`
+- Overview cards
+- Balance trend chart
+- Category spending visualization
 
-## 👥 Role-Based Access Control
+### `/transactions`
+- Search, filter, and transaction listing
+- Admin-only Add/Edit/Delete actions
+- Export data to JSON or CSV
 
-### Viewer Role (Default)
-- View all dashboards
-- View transactions and filters
-- View analytics and insights
-- Read-only access
+### `/analytics`
+- Income vs expense charts
+- Savings rate calculation
+- Monthly trend comparisons
 
-### Admin Role
-- All Viewer permissions +
-- Add transactions
-- Edit transactions
-- Delete transactions
-- Full control
+### `/insights`
+- Smart financial observations
+- Spending and savings recommendations
 
-**Switch roles**: Click the role badge in the top header
+## 👥 Role-Based Access
 
-## 💾 Data Persistence
+- **Viewer**: default read-only mode for browsing data and analytics
+- **Admin**: full transaction control, including add/edit/delete
+- Role switching is available in the top navigation bar
 
-- **Automatic Saving**: Changes saved every second
-- **Zero Backend**: Uses browser localStorage
-- **Survives Restarts**: Data persists across sessions
-- **Export Support**: Download as JSON or CSV
+## 💾 Persistence
 
-**What's saved:**
-- All transactions
-- Selected role
-- Theme preference
-- Filter states
-
-## 🌐 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers
+- Data is auto-saved every second
+- Uses browser `localStorage` for transaction, theme, and role state
+- No backend or remote database needed
 
 ## 🔧 Development
 
-### Prerequisites
-- Node.js 18+ and npm
+### Install
 
-### Available Scripts
 ```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm start        # Start production server
-npm run lint     # Run ESLint
+npm install
 ```
 
 ### Key Development Concepts
@@ -355,12 +319,11 @@ Perfect for:
 
 ### Build Issues
 ```bash
-# Clear cache and reinstall
-rm -rf node_modules package-lock.json
-npm install --legacy-peer-deps
+npm run dev
 ```
 
-### Port Already in Use
+### Build
+
 ```bash
 npm run dev -- -p 3001
 ```
@@ -410,17 +373,35 @@ Built with modern web technologies:
 ## 🚀 Ready to Start?
 
 ```bash
-# Install and start
-npm install --legacy-peer-deps
-npm run dev
-
-# Then open http://localhost:3000
+npm run lint
 ```
+
+## 📂 Project Structure Highlights
+
+- `app/layout.tsx` - root layout, theme provider, and layout wrapper
+- `components/layout/FinSightNavbar.tsx` - responsive top navigation
+- `store/index.ts` - state management for auth, transactions, role, theme, persistence, and toasts
+- `lib/calculations.ts` - dashboard and insights calculations
+- `app/transactions/page.tsx` - transactions management + data export flows
+- `components/analytics/Charts.tsx` - chart visualization components
+- `components/insights/InsightsModule.tsx` - insight text and recommendations
+
+## 📝 Notes
+
+- The app simulates login/signup flows but does not connect to a backend
+- Export controls are available directly from the Transactions page
+- Theme and role preferences persist across browser refreshes
+
+## 🔒 Security & Privacy
+
+- No external API calls
+- All personal and transaction data stays in the browser
+- Local-only persistence with `localStorage`
 
 **Welcome to FinSight!** 🎊
 
 ---
 
-**Last Updated**: April 2, 2026
+**Last Updated**: April 5, 2026
 **Status**: ✅ Complete & Production-Ready
 **Learn More**: See documentation files for details

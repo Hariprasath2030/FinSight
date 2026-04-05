@@ -51,7 +51,6 @@ app/
 ├── transactions/       # Transactions list and management
 ├── analytics/         # Advanced charts and visualizations
 ├── insights/          # Financial insights page
-├── settings/          # Settings and preferences
 ├── layout.tsx         # Root layout with LayoutProvider
 ├── page.tsx           # Home page (redirects to dashboard)
 └── globals.css        # Global styles and Tailwind config
