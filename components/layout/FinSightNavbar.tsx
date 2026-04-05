@@ -8,7 +8,6 @@ import {
   TrendingUp,
   Wallet,
   PieChart,
-  Settings,
   LogOutIcon,
   AlertCircle,
 } from "lucide-react";
@@ -56,7 +55,6 @@ export function FinSightNavbar() {
     { href: "/analytics", name: "Analytics", icon: PieChart },
     { href: "/transactions", name: "Transactions", icon: Wallet },
     { href: "/insights", name: "Insights", icon: AlertCircle },
-    { href: "/settings", name: "Settings", icon: Settings },
   ];
 
   function RoleSwitcher({
