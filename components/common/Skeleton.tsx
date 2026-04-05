@@ -7,10 +7,12 @@ export function SkeletonCard() {
     <div
       className="
         rounded-2xl
-        border border-gray-900/40
-        bg-black
+        border border-gray-200
+        bg-white
         p-5 sm:p-6
         shadow-sm
+        dark:border-gray-800
+        dark:bg-black
       "
     >
       <motion.div
@@ -22,18 +24,17 @@ export function SkeletonCard() {
         }}
         className="flex items-center justify-between"
       >
-        <div className="space-y-4 flex-1">
-        
-          <div className="h-5 w-28 rounded-md bg-gray-900" />
-
-          <div className="h-10 w-36 rounded-md bg-gray-900" />
+        <div className="flex-1 space-y-4">
+          <div className="h-5 w-28 rounded-md bg-gray-200 dark:bg-gray-800" />
+          <div className="h-10 w-36 rounded-md bg-gray-200 dark:bg-gray-800" />
         </div>
 
         <div
           className="
             h-14 w-14 sm:h-16 sm:w-16
             rounded-2xl
-            bg-gray-900
+            bg-gray-200
+            dark:bg-gray-800
           "
         />
       </motion.div>
