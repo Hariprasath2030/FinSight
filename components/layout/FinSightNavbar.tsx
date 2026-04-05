@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/resizable-navbar";
 import { useTheme } from "next-themes";
 import { useStore } from "@/store";
+import { UserRole } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -41,7 +42,7 @@ export function FinSightNavbar() {
   const logout = useStore((state) => state.logout);
   const router = useRouter();
 
-  const handleRoleSwitch = (role: string) => {
+  const handleRoleSwitch = (role: UserRole) => {
     setUserRole(role);
     saveToLocalStorage();
     const roleLabel = role.charAt(0).toUpperCase() + role.slice(1);
@@ -69,7 +70,7 @@ export function FinSightNavbar() {
     handleRoleSwitch,
   }: {
     userRole: string;
-    handleRoleSwitch: (role: string) => void;
+    handleRoleSwitch: (role: UserRole) => void;
   }) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -168,7 +169,7 @@ export function FinSightNavbar() {
                   <button
                     key={role.key}
                     onClick={() => {
-                      handleRoleSwitch(role.key);
+                      handleRoleSwitch(role.key as UserRole);
                       setIsOpen(false);
                     }}
                     className={`

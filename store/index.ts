@@ -226,7 +226,7 @@ export const useStore = create<StoreState>((set, get) => ({
           id: Date.now().toString(),
           message,
           type,
-          duration: duration || (type === "premium" ? 5000 : 4000),
+          duration: duration || 4000,
         },
       ],
     })),

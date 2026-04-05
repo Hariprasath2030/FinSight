@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Trash2, Edit2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useStore } from "@/store";
+import { useTheme } from "next-themes";
 import {
   filterTransactions,
   formatCurrency,
@@ -26,6 +27,7 @@ export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
   const deleteTransaction = useStore((state) => state.deleteTransaction);
   const saveToLocalStorage = useStore((state) => state.saveToLocalStorage);
   const addToast = useStore((state) => state.addToast);
+  const { theme } = useTheme();
 
   const [filteredTransactions, setFilteredTransactions] = useState<any[]>([]);
   const [paginatedTransactions, setPaginatedTransactions] = useState<any[]>([]);

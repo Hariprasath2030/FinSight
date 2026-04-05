@@ -7,7 +7,7 @@ import { calculateDashboardStats } from "@/lib/calculations";
 import { StatCard } from "@/components/common/StatCard";
 import { BalanceTrendChart } from "@/components/dashboard/BalanceTrendChart";
 import { SpendingCategoryChart } from "@/components/dashboard/SpendingCategoryChart";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { SkeletonCard, SkeletonChart } from "@/components/common/Skeleton";
 
 export default function DashboardPage() {
@@ -21,7 +21,7 @@ export default function DashboardPage() {
     savingsPercentage: 0,
   });
 
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setStats(calculateDashboardStats(transactions));
@@ -33,7 +33,7 @@ export default function DashboardPage() {
     return () => clearTimeout(timer);
   }, [transactions]);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -43,7 +43,7 @@ export default function DashboardPage() {
     },
   };
 
-  const fadeUp = {
+  const fadeUp: Variants = {
     hidden: { opacity: 0, y: 30 },
     show: { opacity: 1, y: 0 },
   };
