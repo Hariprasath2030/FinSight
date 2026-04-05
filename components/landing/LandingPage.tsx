@@ -760,11 +760,11 @@ export function LandingPage() {
           text-gray-600 dark:text-gray-400
         "
               >
-                <span>support@finsight.ai</span>
+                <span>finsight@gmail.com</span>
                 <span className="hidden sm:block">•</span>
-                <span>+91 98765 43210</span>
+                <span>+91 8925425514</span>
                 <span className="hidden sm:block">•</span>
-                <span>Pune, India</span>
+                <span>Bangalore, India</span>
               </div>
 
               <div

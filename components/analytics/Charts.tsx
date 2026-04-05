@@ -25,7 +25,7 @@ export function IncomExpenseChart() {
   }, [transactions]);
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-black">
+    <div className="rounded-4xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-black">
       <h2 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">
         Income vs Expenses
       </h2>
@@ -77,7 +77,7 @@ export function SavingsRateChart() {
   }, [transactions]);
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-black">
+    <div className="rounded-4xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-black">
       <h2 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">
         Savings Rate Trend
       </h2>
