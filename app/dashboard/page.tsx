@@ -12,6 +12,7 @@ import { SkeletonCard, SkeletonChart } from "@/components/common/Skeleton";
 
 export default function DashboardPage() {
   const transactions = useStore((state) => state.transactions);
+  const userRole = useStore((state) => state.userRole);
 
   const [stats, setStats] = useState({
     totalBalance: 0,
@@ -20,12 +21,11 @@ export default function DashboardPage() {
     savingsPercentage: 0,
   });
 
-  const [loading, setLoading] = useState(true); // <-- loading state
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     setStats(calculateDashboardStats(transactions));
 
-    // show skeletons for 2 seconds
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
@@ -46,6 +46,20 @@ export default function DashboardPage() {
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     show: { opacity: 1, y: 0 },
+  };
+
+  const getHeaderTitle = () => {
+    if (userRole === "admin") {
+      return "Admin Dashboard";
+    }
+    return "Viewer Dashboard";
+  };
+
+  const getHeaderDescription = () => {
+    if (userRole === "admin") {
+      return "Full access to analytics, reporting, and financial management tools.";
+    }
+    return "View your financial overview and analytics.";
   };
 
   function CountUp({
@@ -93,12 +107,12 @@ export default function DashboardPage() {
       className="relative space-y-10"
     >
       {/* Dashboard Header */}
-      <motion.div variants={fadeUp}>
-        <h1 className="text-4xl font-bold tracking-tight text-black dark:text-white">
-          Dashboard Overview
+      <motion.div variants={fadeUp} className="space-y-4">
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-black dark:text-white">
+          {getHeaderTitle()}
         </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
-          Monitor your balance, income, expenses, and financial growth in real time.
+        <p className="mt-2 text-gray-600 dark:text-gray-400 max-w-2xl">
+          {getHeaderDescription()}
         </p>
       </motion.div>
 

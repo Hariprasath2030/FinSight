@@ -8,6 +8,13 @@ export interface User {
   name: string;
 }
 
+export interface Toast {
+  id: string;
+  message: string;
+  type: "success" | "error" | "info" | "premium";
+  duration?: number;
+}
+
 interface StoreState {
   // Authentication
   isAuthenticated: boolean;
@@ -48,6 +55,19 @@ interface StoreState {
   currentPage: number;
   itemsPerPage: number;
   setCurrentPage: (page: number) => void;
+
+  // Notifications
+  toasts: Toast[];
+  addToast: (
+    message: string,
+    type: "success" | "error" | "info",
+    duration?: number,
+  ) => void;
+  removeToast: (id: string) => void;
+
+  // Subscription
+  isSubscribed: boolean;
+  setIsSubscribed: (subscribed: boolean) => void;
 
   // Persistence
   loadFromLocalStorage: () => void;
@@ -148,6 +168,8 @@ export const useStore = create<StoreState>((set, get) => ({
   theme: "light",
   currentPage: 1,
   itemsPerPage: 10,
+  toasts: [],
+  isSubscribed: false,
 
   // Transaction actions
   addTransaction: (transaction) =>
@@ -195,6 +217,28 @@ export const useStore = create<StoreState>((set, get) => ({
   // Pagination
   setCurrentPage: (page) => set({ currentPage: page }),
 
+  // Toast actions
+  addToast: (message, type, duration) =>
+    set((state) => ({
+      toasts: [
+        ...state.toasts,
+        {
+          id: Date.now().toString(),
+          message,
+          type,
+          duration: duration || (type === "premium" ? 5000 : 4000),
+        },
+      ],
+    })),
+
+  removeToast: (id) =>
+    set((state) => ({
+      toasts: state.toasts.filter((t) => t.id !== id),
+    })),
+
+  // Subscription actions
+  setIsSubscribed: (subscribed) => set({ isSubscribed: subscribed }),
+
   // Persistence
   loadFromLocalStorage: () => {
     if (typeof window !== "undefined") {
@@ -212,11 +256,13 @@ export const useStore = create<StoreState>((set, get) => ({
       // Load finance data
       const stored = localStorage.getItem("financeStore");
       if (stored) {
-        const { transactions, userRole, theme } = JSON.parse(stored);
+        const { transactions, userRole, theme, isSubscribed } =
+          JSON.parse(stored);
         set({
           transactions: transactions || DEFAULT_TRANSACTIONS,
           userRole: userRole || "viewer",
           theme: theme || "light",
+          isSubscribed: isSubscribed || false,
         });
       }
     }
@@ -224,10 +270,10 @@ export const useStore = create<StoreState>((set, get) => ({
 
   saveToLocalStorage: () => {
     if (typeof window !== "undefined") {
-      const { transactions, userRole, theme } = get();
+      const { transactions, userRole, theme, isSubscribed } = get();
       localStorage.setItem(
         "financeStore",
-        JSON.stringify({ transactions, userRole, theme }),
+        JSON.stringify({ transactions, userRole, theme, isSubscribed }),
       );
     }
   },

@@ -10,6 +10,9 @@ import {
   PieChart,
   LogOutIcon,
   AlertCircle,
+  ShieldCheck,
+  Eye,
+  ChevronDown,
 } from "lucide-react";
 import {
   Navbar,
@@ -34,12 +37,15 @@ export function FinSightNavbar() {
   const userRole = useStore((state) => state.userRole);
   const setUserRole = useStore((state) => state.setUserRole);
   const saveToLocalStorage = useStore((state) => state.saveToLocalStorage);
+  const addToast = useStore((state) => state.addToast);
   const logout = useStore((state) => state.logout);
   const router = useRouter();
 
   const handleRoleSwitch = (role: string) => {
     setUserRole(role);
     saveToLocalStorage();
+    const roleLabel = role.charAt(0).toUpperCase() + role.slice(1);
+    addToast(`Switched to ${roleLabel} dashboard`, "success", 3000);
   };
 
   const handleLogout = async () => {
@@ -66,67 +72,126 @@ export function FinSightNavbar() {
   }) {
     const [isOpen, setIsOpen] = useState(false);
 
-    const roles = ["admin", "viewer"];
+    const roles = [
+      {
+        key: "admin",
+        label: "Admin",
+        icon: ShieldCheck,
+        color: "text-emerald-500",
+      },
+      {
+        key: "viewer",
+        label: "Viewer",
+        icon: Eye,
+        color: "text-blue-500",
+      },
+    ];
+
+    const activeRole = roles.find((r) => r.key === userRole);
 
     return (
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="px-4 py-2 group relative
-      rounded-2xl
-      border border-black/10 dark:border-white/10
-      bg-white/70 dark:bg-white/[0.05]
-      backdrop-blur-2xl
-      shadow-[0_8px_30px_rgba(0,0,0,0.08)]
-      dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)]
-      hover:scale-105
-      hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]
-      dark:hover:shadow-[0_12px_40px_rgba(255,255,255,0.08)]
-      active:scale-95
-      transition-all duration-300
-      flex items-center justify-center
-      overflow-hidden"
+          className="
+          group relative
+          flex items-center gap-3
+          px-4 py-2.5
+          rounded-2xl
+          border border-black/10 dark:border-white/10
+          bg-white/70 dark:bg-white/[0.05]
+          backdrop-blur-2xl
+          shadow-[0_8px_30px_rgba(0,0,0,0.08)]
+          dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)]
+          hover:scale-105
+          active:scale-95
+          transition-all duration-300
+          overflow-hidden
+        "
         >
           <div
             className="
-                    absolute inset-0
-                    bg-gradient-to-r
-                    from-transparent
-                    via-black/5
-                    dark:via-white/10
-                    to-transparent
-                    -translate-x-full
-                    group-hover:translate-x-full
-                    transition-transform duration-1000
-                  "
+            absolute inset-0
+            bg-gradient-to-r
+            from-transparent
+            via-black/5
+            dark:via-white/10
+            to-transparent
+            -translate-x-full
+            group-hover:translate-x-full
+            transition-transform duration-1000
+          "
           />
-          {userRole.charAt(0).toUpperCase() + userRole.slice(1)}
+
+          {activeRole && (
+            <>
+              <activeRole.icon
+                className={`relative z-10 w-4 h-4 ${activeRole.color}`}
+              />
+
+              <span className="relative z-10 font-medium text-sm text-black dark:text-white">
+                {activeRole.label}
+              </span>
+
+              <ChevronDown
+                className={`relative z-10 w-4 h-4 text-gray-500 transition-transform duration-300 ${
+                  isOpen ? "rotate-180" : ""
+                }`}
+              />
+            </>
+          )}
         </button>
+
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ type: "spring", stiffness: 250, damping: 20 }}
-              className="absolute mt-2 right-0 w-36 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-black/70 backdrop-blur-xl shadow-lg overflow-hidden z-50"
+              initial={{ opacity: 0, y: -8, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.95 }}
+              transition={{ duration: 0.25 }}
+              className="
+              absolute right-0 mt-3 w-44
+              rounded-2xl
+              border border-black/10 dark:border-white/10
+              bg-white/90 dark:bg-black/80
+              backdrop-blur-2xl
+              shadow-2xl
+              overflow-hidden
+              z-50
+            "
             >
-              {roles.map((role) => (
-                <button
-                  key={role}
-                  onClick={() => {
-                    handleRoleSwitch(role);
-                    setIsOpen(false);
-                  }}
-                  className={`w-full text-left px-4 py-2 text-sm transition-all duration-200 rounded-tl-lg rounded-tr-lg ${
-                    userRole === role
-                      ? "font-semibold bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300"
-                      : "text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-950"
-                  }`}
-                >
-                  {role.charAt(0).toUpperCase() + role.slice(1)}
-                </button>
-              ))}
+              {roles.map((role) => {
+                const Icon = role.icon;
+
+                return (
+                  <button
+                    key={role.key}
+                    onClick={() => {
+                      handleRoleSwitch(role.key);
+                      setIsOpen(false);
+                    }}
+                    className={`
+                    w-full px-4 py-3
+                    flex items-center gap-3
+                    transition-all duration-300
+                    hover:bg-gray-50 dark:hover:bg-gray-900
+                    ${
+                      userRole === role.key
+                        ? "bg-gray-100 dark:bg-gray-950"
+                        : ""
+                    }
+                  `}
+                  >
+                    <Icon className={`w-4 h-4 ${role.color}`} />
+                    <span className="text-sm font-medium text-black dark:text-white">
+                      {role.label}
+                    </span>
+                    {userRole === role.key && (
+                      <div className="ml-auto h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                    )}
+                  </button>
+                );
+              })}
             </motion.div>
           )}
         </AnimatePresence>
