@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   DollarSign,
@@ -26,10 +26,18 @@ import { TextGenerateEffect } from "../TextGenerateEffect";
 
 export function LandingPage() {
   const isAuthenticated = useStore((state) => state.isAuthenticated);
+  const addToast = useStore((state) => state.addToast);
   const { resolvedTheme, setTheme } = useTheme();
   const loadFromLocalStorage = useStore((state) => state.loadFromLocalStorage);
   const [isMounted, setIsMounted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const featuresRef = useRef<HTMLDivElement>(null);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    company: "",
+    message: "",
+  });
 
   const router = useRouter();
 
@@ -43,6 +51,35 @@ export function LandingPage() {
       router.push("/dashboard");
     }
   }, [isAuthenticated, isMounted, router]);
+
+  const handleLearnMore = () => {
+    featuresRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validate form
+    if (!formData.fullName || !formData.email || !formData.message) {
+      addToast("Please fill in all required fields", "error", 3000);
+      return;
+    }
+
+    // Show success toast
+    addToast(
+      "Message sent successfully! Our team will contact you soon.",
+      "success",
+      4000,
+    );
+
+    // Reset form
+    setFormData({
+      fullName: "",
+      email: "",
+      company: "",
+      message: "",
+    });
+  };
 
   if (!isMounted) return null;
 
@@ -122,7 +159,7 @@ export function LandingPage() {
     <div className="relative min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300 overflow-hidden">
       <div className="absolute inset-0 z-0">
         <ShapeGrid
-          speed={0.20}
+          speed={0.2}
           squareSize={100}
           direction="diagonal"
           borderColor={resolvedTheme === "dark" ? "#4b5563" : "#cbd5e1"}
@@ -205,7 +242,6 @@ export function LandingPage() {
       "
                 />
 
-                {/* Icon */}
                 <div className="relative z-10 transition-transform duration-300 group-hover:rotate-12">
                   {resolvedTheme === "light" ? (
                     <Moon className="w-4 h-4 text-slate-700" />
@@ -348,13 +384,14 @@ export function LandingPage() {
           hover:scale-105
           transition-all duration-300
         "
+                onClick={handleLearnMore}
               >
                 Learn More
               </button>
             </div>
           </div>
         </section>
-        <section className="relative py-28 overflow-hidden">
+        <section className="relative py-28 overflow-hidden" ref={featuresRef}>
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-10 left-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
             <div className="absolute bottom-10 right-1/4 h-72 w-72 rounded-full bg-black/5 dark:bg-white/5 blur-3xl" />
@@ -593,7 +630,7 @@ export function LandingPage() {
                 </p>
 
                 <h4 className="text-2xl font-semibold text-black dark:text-white">
-                  Pune, India
+                  Bangalore , India
                 </h4>
 
                 <p className="text-gray-500 dark:text-gray-400 mt-2">
@@ -618,14 +655,25 @@ export function LandingPage() {
       "
             >
               <div className="space-y-6">
-                {["Full name", "Email Address", "Company"].map((label) => (
-                  <div key={label}>
+                {[
+                  { label: "Full name", key: "fullName", type: "text" },
+                  { label: "Email Address", key: "email", type: "email" },
+                  { label: "Company", key: "company", type: "text" },
+                ].map(({ label, key, type }) => (
+                  <div key={key}>
                     <label className="text-black dark:text-white font-medium block mb-2">
                       {label}
                     </label>
                     <input
-                      type="text"
+                      type={type}
                       placeholder={`Enter your ${label.toLowerCase()}`}
+                      value={formData[key as keyof typeof formData]}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          [key]: e.target.value,
+                        })
+                      }
                       className="
                 w-full rounded-2xl
                 bg-black/[0.03] dark:bg-white/[0.03]
@@ -648,6 +696,13 @@ export function LandingPage() {
                   <textarea
                     rows={5}
                     placeholder="Type your message here"
+                    value={formData.message}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        message: e.target.value,
+                      })
+                    }
                     className="
               w-full rounded-2xl
               bg-black/[0.03] dark:bg-white/[0.03]
@@ -663,6 +718,7 @@ export function LandingPage() {
                 </div>
 
                 <button
+                  onClick={handleSendMessage}
                   className="
             w-full py-4 rounded-2xl
             bg-black text-white
@@ -864,7 +920,7 @@ export function LandingPage() {
               }}
               className="
         relative w-full max-w-5xl mx-4
-        rounded-[28px] overflow-hidden
+        rounded-[34px] overflow-hidden
         
         border border-black/10 dark:border-white/10
         

@@ -49,7 +49,7 @@ export default function TransactionsPage() {
     addToast(
       `Exported ${transactions.length} transaction(s) as JSON`,
       "success",
-      3000
+      3000,
     );
   };
 
@@ -77,7 +77,7 @@ export default function TransactionsPage() {
     addToast(
       `Exported ${transactions.length} transaction(s) as CSV`,
       "success",
-      3000
+      3000,
     );
   };
 
