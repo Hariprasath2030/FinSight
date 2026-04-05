@@ -1,19 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Download, Database } from "lucide-react";
 import { useStore } from "@/store";
 import { TransactionFilters } from "@/components/transactions/TransactionFilters";
 import { TransactionTable } from "@/components/transactions/TransactionTable";
 import { TransactionModal } from "@/components/transactions/TransactionModal";
 import { motion } from "framer-motion";
+import { SkeletonTable } from "@/components/common/Skeleton";
 
 export default function TransactionsPage() {
   const userRole = useStore((state) => state.userRole);
   const transactions = useStore((state) => state.transactions);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<any>(null);
-
+  const [loading, setLoading] = useState(true);
   const handleEdit = (transaction: any) => {
     setEditingTransaction(transaction);
     setIsModalOpen(true);
@@ -23,6 +24,11 @@ export default function TransactionsPage() {
     setIsModalOpen(false);
     setEditingTransaction(null);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Export Handlers
   const handleExportJSON = () => {
@@ -151,7 +157,7 @@ export default function TransactionsPage() {
           </button>
         </div>
       </motion.div>
-      <TransactionTable onEdit={handleEdit} />
+      {loading ? <SkeletonTable /> : <TransactionTable onEdit={handleEdit} />}
       <TransactionModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

@@ -20,23 +20,48 @@ export function SkeletonCard() {
 
 export function SkeletonTable() {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-black">
-      <div className="p-6">
-        <div className="space-y-3">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="flex justify-between gap-4"
-            >
-              <div className="h-4 flex-1 rounded bg-gray-300 dark:bg-gray-700" />
-              <div className="h-4 w-20 rounded bg-gray-300 dark:bg-gray-700" />
-              <div className="h-4 w-20 rounded bg-gray-300 dark:bg-gray-700" />
-            </motion.div>
-          ))}
-        </div>
+    <div className="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-black overflow-hidden">
+      <div className="grid grid-cols-5 gap-4 px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+        {["Date", "Description", "Category", "Type", "Amount"].map((_, i) => (
+          <div
+            key={i}
+            className="h-4 w-24 rounded bg-gray-300 dark:bg-gray-700"
+          />
+        ))}
       </div>
+      <div className="divide-y divide-gray-200 dark:divide-gray-800">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <motion.div
+            key={i}
+            animate={{ opacity: [0.4, 1, 0.4] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="grid grid-cols-5 gap-4 px-6 py-4 items-center"
+          >
+            <div className="h-4 w-28 rounded bg-gray-300 dark:bg-gray-700" />
+
+            <div className="h-4 w-40 rounded bg-gray-300 dark:bg-gray-700" />
+
+            <div className="h-4 w-24 rounded bg-gray-300 dark:bg-gray-700" />
+
+            <div className="h-6 w-20 rounded-full bg-gray-300 dark:bg-gray-700" />
+
+            <div className="h-4 w-24 rounded bg-gray-300 dark:bg-gray-700" />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function InsightsSkeleton() {
+  return (
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 animate-pulse">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div
+          key={i}
+          className="h-28 rounded-xl bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-800"
+        ></div>
+      ))}
     </div>
   );
 }

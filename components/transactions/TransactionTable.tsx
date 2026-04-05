@@ -157,7 +157,6 @@ export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
           </tbody>
         </table>
       </div>
-=
       {totalPages > 1 && (
         <div className="flex items-center justify-between border-t border-gray-200 px-6 py-4 dark:border-gray-800">
           <p className="text-sm text-gray-600 dark:text-gray-400">
