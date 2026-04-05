@@ -25,6 +25,7 @@ export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
   const setCurrentPage = useStore((state) => state.setCurrentPage);
   const deleteTransaction = useStore((state) => state.deleteTransaction);
   const saveToLocalStorage = useStore((state) => state.saveToLocalStorage);
+  const addToast = useStore((state) => state.addToast);
 
   const [filteredTransactions, setFilteredTransactions] = useState<any[]>([]);
   const [paginatedTransactions, setPaginatedTransactions] = useState<any[]>([]);
@@ -48,9 +49,14 @@ export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
 
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: string, description: string) => {
     deleteTransaction(id);
     saveToLocalStorage();
+    addToast(
+      `Transaction "${description}" deleted successfully`,
+      "success",
+      3000,
+    );
   };
 
   return (
@@ -133,7 +139,12 @@ export function TransactionTable({ onEdit }: TransactionTableProps = {}) {
                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                         </button>
                         <button
-                          onClick={() => handleDelete(transaction.id)}
+                          onClick={() =>
+                            handleDelete(
+                              transaction.id,
+                              transaction.description,
+                            )
+                          }
                           className="group relative overflow-hidden rounded p-2 text-red-600 transition-all duration-300 ease-in-out hover:scale-110 active:scale-95 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
                         >
                           <Trash2 size={16} className="relative z-10" />

@@ -12,6 +12,7 @@ import { SkeletonTable } from "@/components/common/Skeleton";
 export default function TransactionsPage() {
   const userRole = useStore((state) => state.userRole);
   const transactions = useStore((state) => state.transactions);
+  const addToast = useStore((state) => state.addToast);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -45,6 +46,11 @@ export default function TransactionsPage() {
     link.download = `finsight-export-${new Date().getTime()}.json`;
     link.click();
     URL.revokeObjectURL(url);
+    addToast(
+      `Exported ${transactions.length} transaction(s) as JSON`,
+      "success",
+      3000
+    );
   };
 
   const handleExportCSV = () => {
@@ -68,6 +74,11 @@ export default function TransactionsPage() {
     link.download = `finsight-export-${new Date().getTime()}.csv`;
     link.click();
     URL.revokeObjectURL(url);
+    addToast(
+      `Exported ${transactions.length} transaction(s) as CSV`,
+      "success",
+      3000
+    );
   };
 
   return (

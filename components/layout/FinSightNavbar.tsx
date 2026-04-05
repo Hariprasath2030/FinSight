@@ -50,6 +50,7 @@ export function FinSightNavbar() {
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
+    addToast("You have been logged out successfully", "success", 3000);
     await new Promise((resolve) => setTimeout(resolve, 600));
     logout();
     saveToLocalStorage();

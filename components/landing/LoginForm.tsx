@@ -3,6 +3,7 @@ import { useStore } from "@/store";
 import { Mail, Lock, X, LogIn, EyeOff, Eye } from "lucide-react";
 import { motion } from "framer-motion";
 import { UserRole } from "@/types";
+import { useRouter } from "next/navigation";
 
 interface LoginFormProps {
   onClose: () => void;
@@ -10,6 +11,8 @@ interface LoginFormProps {
 
 export function LoginForm({ onClose }: LoginFormProps) {
   const login = useStore((state) => state.login);
+  const addToast = useStore((state) => state.addToast);
+  const router = useRouter();
 
   const [email, setEmail] = useState("demo@example.com");
   const [password, setPassword] = useState("pass123");
@@ -51,6 +54,18 @@ export function LoginForm({ onClose }: LoginFormProps) {
       }
 
       login(email, password, selectedRole);
+
+      const roleLabel =
+        selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1);
+      addToast(
+        `Welcome ${email.split("@")[0]}! Logged in as ${roleLabel}`,
+        "success",
+        3000,
+      );
+      onClose();
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 500);
     } catch {
       setError("Login failed. Please try again.");
       setIsLoading(false);

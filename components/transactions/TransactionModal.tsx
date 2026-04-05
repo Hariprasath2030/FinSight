@@ -20,6 +20,7 @@ export function TransactionModal({
   const addTransaction = useStore((state) => state.addTransaction);
   const editTransaction = useStore((state) => state.editTransaction);
   const saveToLocalStorage = useStore((state) => state.saveToLocalStorage);
+  const addToast = useStore((state) => state.addToast);
 
   const [formData, setFormData] = useState({
     date: editingTransaction?.date || new Date().toISOString().split("T")[0],
@@ -41,8 +42,21 @@ export function TransactionModal({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (editingTransaction) editTransaction(editingTransaction.id, formData);
-    else addTransaction(formData);
+    if (editingTransaction) {
+      editTransaction(editingTransaction.id, formData);
+      addToast(
+        `Transaction "${formData.description}" updated successfully`,
+        "success",
+        3000,
+      );
+    } else {
+      addTransaction(formData);
+      addToast(
+        `Transaction "${formData.description}" created successfully`,
+        "success",
+        3000,
+      );
+    }
     saveToLocalStorage();
     onClose();
     setFormData({
@@ -214,7 +228,9 @@ export function TransactionModal({
         transition-transform duration-1000
       "
                   />
-                  {editingTransaction ? "Update Transaction" : "Add Transaction"}
+                  {editingTransaction
+                    ? "Update Transaction"
+                    : "Add Transaction"}
                 </motion.button>
               </motion.div>
             </form>
