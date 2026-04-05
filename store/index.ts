@@ -16,7 +16,6 @@ export interface Toast {
 }
 
 interface StoreState {
-  // Authentication
   isAuthenticated: boolean;
   currentUser: User | null;
   login: (email: string, password: string, role: UserRole) => void;
@@ -28,13 +27,11 @@ interface StoreState {
   ) => void;
   logout: () => void;
 
-  // Transactions
   transactions: Transaction[];
   addTransaction: (transaction: Omit<Transaction, "id">) => void;
   editTransaction: (id: string, transaction: Omit<Transaction, "id">) => void;
   deleteTransaction: (id: string) => void;
 
-  // Filters
   searchQuery: string;
   selectedCategory: string | null;
   transactionType: "all" | "income" | "expense";
@@ -43,20 +40,16 @@ interface StoreState {
   setTransactionType: (type: "all" | "income" | "expense") => void;
   resetFilters: () => void;
 
-  // Role Management
   userRole: UserRole;
   setUserRole: (role: UserRole) => void;
 
-  // Theme
   theme: Theme;
   toggleTheme: () => void;
 
-  // Pagination
   currentPage: number;
   itemsPerPage: number;
   setCurrentPage: (page: number) => void;
 
-  // Notifications
   toasts: Toast[];
   addToast: (
     message: string,
@@ -65,11 +58,9 @@ interface StoreState {
   ) => void;
   removeToast: (id: string) => void;
 
-  // Subscription
   isSubscribed: boolean;
   setIsSubscribed: (subscribed: boolean) => void;
 
-  // Persistence
   loadFromLocalStorage: () => void;
   saveToLocalStorage: () => void;
 }
@@ -118,13 +109,11 @@ const DEFAULT_TRANSACTIONS: Transaction[] = [
 ];
 
 export const useStore = create<StoreState>((set, get) => ({
-  // Authentication state
+ 
   isAuthenticated: false,
   currentUser: null,
 
-  // Authentication actions
   login: (email, password, role) => {
-    // Simulate login - in real app, verify credentials
     const user: User = {
       id: Date.now().toString(),
       email,
@@ -139,7 +128,6 @@ export const useStore = create<StoreState>((set, get) => ({
   },
 
   signup: (email, password, role, name) => {
-    // Simulate signup - in real app, would create account
     const user: User = {
       id: Date.now().toString(),
       email,
@@ -159,7 +147,6 @@ export const useStore = create<StoreState>((set, get) => ({
     localStorage.removeItem("financeStore");
   },
 
-  // Initial state
   transactions: DEFAULT_TRANSACTIONS,
   searchQuery: "",
   selectedCategory: null,
@@ -171,7 +158,6 @@ export const useStore = create<StoreState>((set, get) => ({
   toasts: [],
   isSubscribed: false,
 
-  // Transaction actions
   addTransaction: (transaction) =>
     set((state) => ({
       transactions: [
@@ -192,7 +178,6 @@ export const useStore = create<StoreState>((set, get) => ({
       transactions: state.transactions.filter((t) => t.id !== id),
     })),
 
-  // Filter actions
   setSearchQuery: (query) => set({ searchQuery: query, currentPage: 1 }),
   setSelectedCategory: (category) =>
     set({ selectedCategory: category, currentPage: 1 }),
@@ -205,19 +190,15 @@ export const useStore = create<StoreState>((set, get) => ({
       currentPage: 1,
     }),
 
-  // Role actions
   setUserRole: (role) => set({ userRole: role }),
 
-  // Theme actions
   toggleTheme: () =>
     set((state) => ({
       theme: state.theme === "light" ? "dark" : "light",
     })),
 
-  // Pagination
   setCurrentPage: (page) => set({ currentPage: page }),
 
-  // Toast actions
   addToast: (message, type, duration) =>
     set((state) => ({
       toasts: [
@@ -235,14 +216,11 @@ export const useStore = create<StoreState>((set, get) => ({
     set((state) => ({
       toasts: state.toasts.filter((t) => t.id !== id),
     })),
-
-  // Subscription actions
   setIsSubscribed: (subscribed) => set({ isSubscribed: subscribed }),
 
-  // Persistence
   loadFromLocalStorage: () => {
     if (typeof window !== "undefined") {
-      // Load auth data
+  
       const authData = localStorage.getItem("currentUser");
       if (authData) {
         const { user, isAuthenticated } = JSON.parse(authData);
@@ -253,7 +231,6 @@ export const useStore = create<StoreState>((set, get) => ({
         });
       }
 
-      // Load finance data
       const stored = localStorage.getItem("financeStore");
       if (stored) {
         const { transactions, userRole, theme, isSubscribed } =
